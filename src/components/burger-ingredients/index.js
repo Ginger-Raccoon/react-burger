@@ -5,9 +5,20 @@ import PropTypes from 'prop-types';
 
 import Cards from "../card";
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
+import IngredientDetails from "../ingredient-details";
 
-const BurgerIngredients = ({data}) => {
+const BurgerIngredients = ({data, setModal}) => {
     const [current, setCurrent] = React.useState('one')
+
+    const getData = (data) => {
+        console.log(data)
+        setModal ({
+                isOpen: true,
+                content: <IngredientDetails item={data}/>,
+                title: 'Детали ингредиента'
+                }
+        )
+    }
 
     const bun = data.filter((i) => i.type === "bun");
     const sauce = data.filter((i) => i.type === "sauce");
@@ -27,9 +38,9 @@ const BurgerIngredients = ({data}) => {
                 </Tab>
             </div>
             <div className={cn(s.card__container)}>
-                <Cards title='Булки' ingredients={ bun } />
-                <Cards title='Соусы' ingredients={ sauce } />
-                <Cards title='Начинки' ingredients={ main } />
+                <Cards title='Булки' ingredients={ bun } getData={getData}/>
+                <Cards title='Соусы' ingredients={ sauce } getData={getData}/>
+                <Cards title='Начинки' ingredients={ main } getData={getData}/>
             </div>
         </div>
 )

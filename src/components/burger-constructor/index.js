@@ -1,10 +1,19 @@
 import { ConstructorElement, DragIcon, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 
 import cn from 'classnames';
+import OrderDetails from "../order-details";
+import PropTypes from 'prop-types';
 import s from './style.module.css';
 
-const BurgerConstructor = () => {
+const BurgerConstructor = (props) => {
     const img = "https://code.s3.yandex.net/react/code/bun-02.png"
+
+    const openModal = () => {
+        props.setModal({
+            isOpen: true,
+            content: <OrderDetails />
+        })
+    }
     return (
         <div className={cn(s.container, "mt-25")}>
             <header className={cn(s.container__head, "mb-5")}>
@@ -41,7 +50,7 @@ const BurgerConstructor = () => {
                     <span className="text text_type_digits-default">610</span>
                     <CurrencyIcon type="primary" />
                 </div>
-                <Button type="primary" size="large">
+                <Button type="primary" size="large" onClick={openModal}>
                     Оформить заказ
                 </Button>
             </div>
@@ -49,5 +58,8 @@ const BurgerConstructor = () => {
 )
 }
 
+BurgerConstructor.propTypes = {
+    setModal: PropTypes.func.isRequired
+}
 
 export default BurgerConstructor
