@@ -1,7 +1,7 @@
 import { ConstructorElement, DragIcon, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 
 import cn from 'classnames';
-import OrderDetails from "../order-details";
+import OrderDetails from "../order-details/order-details";
 import PropTypes from 'prop-types';
 import s from './style.module.css';
 

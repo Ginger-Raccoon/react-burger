@@ -3,9 +3,9 @@ import cn from 'classnames';
 import s from './style.module.css';
 import PropTypes from 'prop-types';
 
-import Cards from "../card";
+import Cards from "../card/card";
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
-import IngredientDetails from "../ingredient-details";
+import IngredientDetails from "../ingredient-details/ingredient-details";
 
 const BurgerIngredients = ({data, setModal}) => {
     const [current, setCurrent] = React.useState('one')

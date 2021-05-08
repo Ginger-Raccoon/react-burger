@@ -4,7 +4,7 @@ import cn from 'classnames';
 import {  CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from 'prop-types';
 import s from './style.module.css';
-import ModalOverlay from "../modal-overlay";
+import ModalOverlay from "../modal-overlay/modal-overlay";
 
 
 const Modal = (props) => {

@@ -1,10 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import AppHeader from './components/app-header/index';
-import BurgerConstructor from "./components/burger-ingredients";
-import './App.css';
-import BurgerIngredients from "./components/burger-constructor";
-import {url} from "./utils/data";
-import Modal from "./components/modal";
+import AppHeader from '../app-header/app-header';
+import BurgerConstructor from "../burger-ingredients/burger-ingredients";
+import './style.module.css';
+import BurgerIngredients from "../burger-constructor/burger-constructor";
+import {url} from "../../utils/data";
+import Modal from "../modal/modal";
+
+import cn from 'classnames';
+import s from './style.module.css';
 
 function App() {
 
@@ -25,6 +28,8 @@ function App() {
             .then(res => {
                 if (res.ok) {
                     return res.json()
+                } else {
+                    throw new Error('Ошибка сети')
                 }
             })
             .then(data => {
@@ -47,9 +52,9 @@ function App() {
 
 
   return (
-    <div className="page">
+    <div className={cn(s.page)}>
       <AppHeader />
-      <div className="main__container">
+      <div className={cn(s.main__container)}>
           <BurgerConstructor data={state.data} setModal={setModal}/>
           <BurgerIngredients setModal={setModal}/>
       </div>
