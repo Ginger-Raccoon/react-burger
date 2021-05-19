@@ -2,6 +2,19 @@
   text-align: center;
 }
 
+.page {
+  display: flex;
+  flex-direction: column;
+  min-width: 1024px;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.main__container {
+  display: flex;
+  grid-column-gap: 40px;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
