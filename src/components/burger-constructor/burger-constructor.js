@@ -13,12 +13,13 @@ const BurgerConstructor = (props) => {
     const { state, setState } = useContext(BurgerContext);
     const { bun, filling } = state.burgerIngredients;
     const handleClick = () => {
+        const ingredients = filling.map(e => e._id)
         fetch(urlOrder, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(filling.map(e => e._id))
+            body: JSON.stringify({ingredients})
         })
             .then((res) => {
                 if (res.ok) {
