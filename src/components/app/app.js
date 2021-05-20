@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from 'react';
+import { BurgerContext } from '../../services/burgerContext';
 import AppHeader from '../app-header/app-header';
-import BurgerConstructor from "../burger-ingredients/burger-ingredients";
+import BurgerIngredients  from "../burger-ingredients/burger-ingredients";
 import './style.module.css';
-import BurgerIngredients from "../burger-constructor/burger-constructor";
+import BurgerConstructor from "../burger-constructor/burger-constructor";
 import {url} from "../../utils/data";
 import Modal from "../modal/modal";
 
@@ -13,7 +14,11 @@ function App() {
 
     const [state, setState] = useState({
         data: [],
-        success: false
+        success: false,
+        burgerIngredients: {
+            bun: null,
+            filling: []
+        }
     });
 
     const [modal, setModal] = useState({
@@ -34,6 +39,7 @@ function App() {
             })
             .then(data => {
                 setState({
+                    ...state,
                     data: data.data,
                     success: data.success
                 })
@@ -55,8 +61,10 @@ function App() {
     <div className={cn(s.page)}>
       <AppHeader />
       <div className={cn(s.main__container)}>
-          <BurgerConstructor data={state.data} setModal={setModal}/>
-          <BurgerIngredients setModal={setModal}/>
+          <BurgerContext.Provider value={{ state, setState }}>
+              <BurgerIngredients setModal={setModal}/>
+              {state.burgerIngredients.bun && <BurgerConstructor setModal={setModal}/>}
+          </BurgerContext.Provider>
       </div>
         {modal.isOpen && <Modal setModal={setModal} title={modal.title}>{modal.content}</Modal>}
     </div>
