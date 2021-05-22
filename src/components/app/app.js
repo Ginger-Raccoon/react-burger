@@ -4,7 +4,7 @@ import AppHeader from '../app-header/app-header';
 import BurgerIngredients  from "../burger-ingredients/burger-ingredients";
 import './style.module.css';
 import BurgerConstructor from "../burger-constructor/burger-constructor";
-import {url} from "../../utils/data";
+import {url} from "../../utils/constant";
 import Modal from "../modal/modal";
 
 import cn from 'classnames';
@@ -63,7 +63,7 @@ function App() {
       <div className={cn(s.main__container)}>
           <BurgerContext.Provider value={{ state, setState }}>
               <BurgerIngredients setModal={setModal}/>
-              {state.burgerIngredients.bun && <BurgerConstructor setModal={setModal}/>}
+              {(state.burgerIngredients.bun && <BurgerConstructor setModal={setModal}/>)?<BurgerConstructor setModal={setModal}/> : "Выберите булочку"}
           </BurgerContext.Provider>
       </div>
         {modal.isOpen && <Modal setModal={setModal} title={modal.title}>{modal.content}</Modal>}

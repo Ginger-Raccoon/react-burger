@@ -6,7 +6,8 @@ import PropTypes from 'prop-types';
 import s from './style.module.css';
 import {useContext} from "react";
 import {BurgerContext} from "../../services/burgerContext";
-import {urlOrder} from "../../utils/data";
+import {urlOrder} from "../../utils/constant";
+import { v4 as uuidv4 } from 'uuid'
 
 const BurgerConstructor = (props) => {
     const img = "https://code.s3.yandex.net/react/code/bun-02.png"
@@ -34,11 +35,13 @@ const BurgerConstructor = (props) => {
                     content: <OrderDetails orderNum={data.order.number} />
                 })
             })
+            .catch((err) => console.log(err))
 
     }
     const total = (bun, filling) => {
         return bun.price * 2 + filling.reduce((acc, curr) => acc += curr.price, 0)
     }
+    console.log(bun)
     return (
         <div className={cn(s.container, "mt-25")}>
             <header className={cn(s.container__head, "mb-5")}>
@@ -46,7 +49,7 @@ const BurgerConstructor = (props) => {
             </header>
             <ul className={s.list}>
                 {filling.map(e => (
-                    <li className={cn(s.list__item, "mb-5")}>
+                    <li className={cn(s.list__item, "mb-5")} key={uuidv4()}>
                         <DragIcon type="primary" />
                         <ConstructorElement text={e.name} price={e.price} thumbnail={e.image} />
                     </li>
