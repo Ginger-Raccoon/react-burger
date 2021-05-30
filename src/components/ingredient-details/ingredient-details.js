@@ -5,7 +5,7 @@ import s from './style.module.css'
 const IngredientDetails = ({item}) => {
     return (
         <div className={cn(s.popup__container)}>
-            <img src={item.image_large} className={cn(s.popup__img, "mb-4")}/>
+            <img src={item.image_large} alt='item_image' className={cn(s.popup__img, "mb-4")}/>
             <p className={cn(s.popup__subtitle, "text", "text_type_main-medium", "mb-8")}>{item.name}</p>
             <p className={cn(s.popup__descr, "text", "text_type_main-default", "mb-8")}>Превосходные котлеты из марсианской Магнолии
                 для фирменных космических бургеров, набирающих популярность по всей вселенной.</p>

@@ -1,72 +1,55 @@
-import React, {useEffect, useState} from 'react';
-import { BurgerContext } from '../../services/burgerContext';
+import React, {useEffect} from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import AppHeader from '../app-header/app-header';
 import BurgerIngredients  from "../burger-ingredients/burger-ingredients";
 import './style.module.css';
 import BurgerConstructor from "../burger-constructor/burger-constructor";
-import {url} from "../../utils/constant";
 import Modal from "../modal/modal";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
 import cn from 'classnames';
 import s from './style.module.css';
+import { getIngredients, CHOOSE_INGREDIENTS, INCREASE_COUNTER } from "../../services/actions/card";
+
 
 function App() {
-
-    const [state, setState] = useState({
-        data: [],
-        success: false,
-        burgerIngredients: {
-            bun: null,
-            filling: []
-        }
-    });
-
-    const [modal, setModal] = useState({
-        isOpen: false,
-        content: null,
-        title: null
-    })
-
-    const getData = () => {
-        setState({...state, success: false});
-        fetch(url)
-            .then(res => {
-                if (res.ok) {
-                    return res.json()
-                } else {
-                    throw new Error('Ошибка сети')
-                }
-            })
-            .then(data => {
-                setState({
-                    ...state,
-                    data: data.data,
-                    success: data.success
-                })
-            })
-            .catch(() => {
-                setState({
-                    ...state,
-                    success: false
-                })
-            })
-    }
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        getData()
-    },[])
+        dispatch(getIngredients())
+    },[dispatch])
 
+    const { data, ingredientRequest, ingredientFailed } = useSelector((store) => store.card);
+    const { isOpen, title, content } = useSelector((store) => store.modal);
+
+
+    const handleDrop = (item) => {
+        dispatch({
+            type: CHOOSE_INGREDIENTS,
+            item
+        })
+        dispatch({
+            type: INCREASE_COUNTER,
+            key: item._id,
+            typeItem: item.type
+        })
+    };
 
   return (
     <div className={cn(s.page)}>
       <AppHeader />
       <div className={cn(s.main__container)}>
-          <BurgerContext.Provider value={{ state, setState }}>
-              <BurgerIngredients setModal={setModal}/>
-              {(state.burgerIngredients.bun && <BurgerConstructor setModal={setModal}/>)?<BurgerConstructor setModal={setModal}/> : "Выберите булочку"}
-          </BurgerContext.Provider>
+          {ingredientRequest && "Загружаю булочки..."}
+          {ingredientFailed && "Ошибка загрузки булочек..."}
+          {!ingredientRequest && !ingredientFailed && data.length && (
+              <DndProvider backend={HTML5Backend}>
+                      <BurgerIngredients/>
+                      <BurgerConstructor onDropHandler={handleDrop} />
+              </DndProvider>
+          )}
       </div>
-        {modal.isOpen && <Modal setModal={setModal} title={modal.title}>{modal.content}</Modal>}
+        {isOpen && <Modal title={title}>{content}</Modal>}
     </div>
   );
 }
