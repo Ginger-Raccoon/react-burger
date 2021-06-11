@@ -41,7 +41,7 @@ function App() {
                     <OrderPage />
                 </Route>
                 <Route path='/ingredients/:id' exact={true}>
-                    <h1>Здесь что-то будет... Но это не точно</h1>
+                    <h1>Здесь что-то будет... Но это не точно!</h1>
                 </Route>
             </Switch>
         </Router>
