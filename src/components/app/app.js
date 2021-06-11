@@ -1,54 +1,50 @@
-import React, {useEffect} from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import AppHeader from '../app-header/app-header';
-import BurgerIngredients  from "../burger-ingredients/burger-ingredients";
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './style.module.css';
-import BurgerConstructor from "../burger-constructor/burger-constructor";
 import Modal from "../modal/modal";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
-
+import {ResetPasswordPage, LoginPage, MainPage, RegisterPage, ProfilePage, FeedPage, OrderPage} from '../../pages'
 import cn from 'classnames';
 import s from './style.module.css';
-import { getIngredients, CHOOSE_INGREDIENTS, INCREASE_COUNTER } from "../../services/actions/card";
-
+import {ForgotPasswordPage} from "../../pages/forgot-password/forgot-password";
 
 function App() {
-    const dispatch = useDispatch();
-
-    useEffect(() => {
-        dispatch(getIngredients())
-    },[dispatch])
-
-    const { data, ingredientRequest, ingredientFailed } = useSelector((store) => store.card);
     const { isOpen, title, content } = useSelector((store) => store.modal);
 
 
-    const handleDrop = (item) => {
-        dispatch({
-            type: CHOOSE_INGREDIENTS,
-            item
-        })
-        dispatch({
-            type: INCREASE_COUNTER,
-            key: item._id,
-            typeItem: item.type
-        })
-    };
-
   return (
     <div className={cn(s.page)}>
-      <AppHeader />
-      <div className={cn(s.main__container)}>
-          {ingredientRequest && "Загружаю булочки..."}
-          {ingredientFailed && "Ошибка загрузки булочек..."}
-          {!ingredientRequest && !ingredientFailed && data.length && (
-              <DndProvider backend={HTML5Backend}>
-                      <BurgerIngredients/>
-                      <BurgerConstructor onDropHandler={handleDrop} />
-              </DndProvider>
-          )}
-      </div>
+        <Router>
+            <Switch>
+                <Route path='/' exact={true}>
+                    <MainPage />
+                </Route>
+                <Route path='/login' exact={true}>
+                    <LoginPage />
+                </Route>
+                <Route path='/register' exact={true}>
+                    <RegisterPage />
+                </Route>
+                <Route path='/forgot-password' exact={true}>
+                    <ForgotPasswordPage />
+                </Route>
+                <Route path='/reset-password' exact={true}>
+                    <ResetPasswordPage />
+                </Route>
+                <Route path='/profile'>
+                    <ProfilePage />
+                </Route>
+                <Route path='/feed' exact={true}>
+                    <FeedPage />
+                </Route>
+                <Route path='/feed/:id' exact={true}>
+                    <OrderPage />
+                </Route>
+                <Route path='/ingredients/:id' exact={true}>
+                    <h1>Здесь что-то будет... Но это не точно</h1>
+                </Route>
+            </Switch>
+        </Router>
         {isOpen && <Modal title={title}>{content}</Modal>}
     </div>
   );
