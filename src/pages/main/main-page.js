@@ -1,5 +1,4 @@
 import s from './main.module.css'
-import AppHeader from "../../components/app-header/app-header";
 import cn from "classnames";
 import {DndProvider} from "react-dnd";
 import {HTML5Backend} from "react-dnd-html5-backend";
@@ -32,7 +31,6 @@ export function MainPage() {
 
     return (
         <>
-            <AppHeader />
             <div className={cn(s.main__container)}>
                 {ingredientRequest && "Загружаю булочки..."}
                 {ingredientFailed && "Ошибка загрузки булочек..."}

@@ -7,6 +7,7 @@ import {ResetPasswordPage, LoginPage, MainPage, RegisterPage, ProfilePage, FeedP
 import cn from 'classnames';
 import s from './style.module.css';
 import {ForgotPasswordPage} from "../../pages/forgot-password/forgot-password";
+import AppHeader from "../app-header/app-header";
 
 function App() {
     const { isOpen, title, content } = useSelector((store) => store.modal);
@@ -14,33 +15,34 @@ function App() {
 
   return (
     <div className={cn(s.page)}>
+        <AppHeader />
         <Router>
             <Switch>
-                <Route path='/' exact={true}>
+                <Route path='/' exact >
                     <MainPage />
                 </Route>
-                <Route path='/login' exact={true}>
+                <Route path='/login' exact >
                     <LoginPage />
                 </Route>
-                <Route path='/register' exact={true}>
+                <Route path='/register' >
                     <RegisterPage />
                 </Route>
-                <Route path='/forgot-password' exact={true}>
+                <Route path='/forgot-password' exact >
                     <ForgotPasswordPage />
                 </Route>
-                <Route path='/reset-password' exact={true}>
+                <Route path='/reset-password' exact >
                     <ResetPasswordPage />
                 </Route>
                 <Route path='/profile'>
                     <ProfilePage />
                 </Route>
-                <Route path='/feed' exact={true}>
+                <Route path='/feed' exact >
                     <FeedPage />
                 </Route>
-                <Route path='/feed/:id' exact={true}>
+                <Route path='/feed/:id' exact >
                     <OrderPage />
                 </Route>
-                <Route path='/ingredients/:id' exact={true}>
+                <Route path='/ingredients/:id' exact >
                     <h1>Здесь что-то будет... Но это не точно!</h1>
                 </Route>
             </Switch>

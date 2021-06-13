@@ -1,5 +1,4 @@
 import s from './login.module.css'
-import AppHeader from "../../components/app-header/app-header";
 import cn from 'classnames';
 import { Link } from 'react-router-dom';
 import {Logo, Input, PasswordInput, Button } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -7,7 +6,6 @@ import {Logo, Input, PasswordInput, Button } from "@ya.praktikum/react-developer
 export function LoginPage() {
     return (
         <>
-            <AppHeader />
             <div className={cn(s.container, 'mt-20')}>
                 <Logo />
                 <form className={cn(s.form, 'mt-20')}>

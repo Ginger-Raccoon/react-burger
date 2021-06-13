@@ -2,12 +2,13 @@ import { url } from '../../utils/constant';
 
 export const GET_INGREDIENTS = 'GET_INGREDIENTS' // загрузка карточек
 export const GET_INGREDIENTS_FAILED = 'GET_INGREDIENTS_FAILED' // ошибка карточек
-export const  GET_INGREDIENTS_SUCCESS = 'GET_INGREDIENTS_SUCCESS' // получение карточек
+export const GET_INGREDIENTS_SUCCESS = 'GET_INGREDIENTS_SUCCESS' // получение карточек
 export const CHOOSE_INGREDIENTS = 'CHOOSE_INGREDIENTS' // выбор ингредиентов
 export const INCREASE_COUNTER = 'INCREASE_COUNTER' // Увеличение счетчика
 export const DECREASE_COUNTER = 'DECREASE_COUNTER' // Уменьшение счетчика
 export const DELETE_INGREDIENT = 'DELETE_INGREDIENT' // Удаление карточки
 export const MOVE_INGREDIENT = 'MOVE_INGREDIENT' // Сортировка карточек
+export const CLEAR_CONSTRUCTOR = 'CLEAR_CONSTRUCTOR' // Очистка конструктора
 
 export function getIngredients() {
     return function(dispatch) {

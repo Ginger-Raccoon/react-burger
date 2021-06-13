@@ -40,7 +40,9 @@ const BurgerIngredients = () => {
     }
 
     useEffect(() => {
-        document.querySelector(`#${current}`).scrollIntoView();
+        if (current === 'bun') bunRef.current.scrollIntoView()
+        else if (current === 'sauce') sauceRef.current.scrollIntoView()
+        else if (current === 'main') mainRef.current.scrollIntoView()
     },[current])
 
     return (

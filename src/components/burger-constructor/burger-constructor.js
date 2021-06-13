@@ -7,7 +7,7 @@ import s from './style.module.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { getOrder, OPEN_MODAL } from "../../services/actions/modal";
 import { useDrop } from 'react-dnd';
-import {DECREASE_COUNTER, DELETE_INGREDIENT, MOVE_INGREDIENT} from "../../services/actions/card";
+import {DECREASE_COUNTER, DELETE_INGREDIENT, MOVE_INGREDIENT, CLEAR_CONSTRUCTOR} from "../../services/actions/card";
 import BurgerItem from '../burger-item/burger-item';
 
 const BurgerConstructor = ({ onDropHandler }) => {
@@ -33,10 +33,13 @@ const BurgerConstructor = ({ onDropHandler }) => {
             isOpen: true,
             content: <OrderDetails />
         })
+        dispatch({
+            type: CLEAR_CONSTRUCTOR
+        })
     }
 
     const isActive = canDrop && isHover;
-    let classModificator = isActive ? 'container_active' : canDrop ? 'container_candrop' : ''
+    const classModificator = isActive ? 'container_active' : canDrop ? 'container_candrop' : ''
 
     const moveItem = useCallback((dragIndex, hoverIndex) => {
         dispatch({
@@ -80,7 +83,7 @@ const BurgerConstructor = ({ onDropHandler }) => {
                         <BurgerItem
                             item={el}
                             index={i}
-                            key={el.poductId}
+                            key={el._id}
                             deleteIngredient={deleteIngredient}
                             moveItem={moveItem}
                         />

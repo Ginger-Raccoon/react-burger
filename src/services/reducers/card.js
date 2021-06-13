@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import { GET_INGREDIENTS, GET_INGREDIENTS_FAILED, GET_INGREDIENTS_SUCCESS, CHOOSE_INGREDIENTS,
-    INCREASE_COUNTER, DECREASE_COUNTER, DELETE_INGREDIENT, MOVE_INGREDIENT } from '../actions/card'
+    INCREASE_COUNTER, DECREASE_COUNTER, DELETE_INGREDIENT, MOVE_INGREDIENT, CLEAR_CONSTRUCTOR } from '../actions/card'
 
 
 const ingredientState = {
@@ -98,6 +98,17 @@ export const cardReducer = (state = ingredientState, action) => {
                 }
             };
         }
+        case CLEAR_CONSTRUCTOR: {
+            return {
+                ...state,
+                burgerIngredients: {
+                    ...state.burgerIngredients,
+                    bun: null,
+                    fillings: [],
+                    counts: {}
+                }
+            }
+        }
         case MOVE_INGREDIENT: {
             const fillings = [...state.burgerIngredients.fillings];
             fillings.splice(action.toIndex, 0,fillings.splice(action.fromIndex,1)[0]);
@@ -109,6 +120,7 @@ export const cardReducer = (state = ingredientState, action) => {
                 }
             };
         }
+
         default: {
             return state
         }

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import s from './profile.module.css'
-import AppHeader from "../../components/app-header/app-header";
 import {NavLink, Route, Switch, Link} from 'react-router-dom';
 import { Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import { ordersData } from "../../utils/data";
@@ -38,7 +37,6 @@ export function ProfilePage() {
 
     return (
         <>
-            <AppHeader />
             <div className={cn(s.main)} >
                 <nav className={cn(s.nav, 'mb-20')}>
                     <ul className={cn(s.nav__list)}>

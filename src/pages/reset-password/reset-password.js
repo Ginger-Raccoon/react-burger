@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import s from './reset-password.module.css'
-import AppHeader from "../../components/app-header/app-header";
 import {Button, Input, Logo, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import cn from "classnames";
 import {Link} from "react-router-dom";
@@ -55,7 +54,6 @@ export function ResetPasswordPage() {
 
     return (
         <>
-            <AppHeader />
             <div className={cn(s.container, 'mt-20')}>
                 <Logo />
                 <form className={cn(s.form, 'mt-20')} onSubmit={formSubmit}>

@@ -1,6 +1,5 @@
 import React, { useState, useRef } from 'react';
 import s from './forgot-password.module.css'
-import AppHeader from "../../components/app-header/app-header";
 import cn from "classnames";
 import {Button, Input, Logo, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Link} from "react-router-dom";
@@ -38,7 +37,6 @@ export function ForgotPasswordPage() {
 
     return (
         <>
-            <AppHeader />
             <div className={cn(s.container, 'mt-20')}>
                 <Logo />
                 <form className={cn(s.form, 'mt-20')} onSubmit={submitForm}>

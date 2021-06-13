@@ -1,5 +1,4 @@
 import s from './register.module.css'
-import AppHeader from "../../components/app-header/app-header";
 import {Button, Input, Logo, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import cn from "classnames";
 import {Link} from "react-router-dom";
@@ -7,7 +6,6 @@ import {Link} from "react-router-dom";
 export function RegisterPage() {
     return (
         <>
-            <AppHeader />
             <div className={cn(s.container, 'mt-20')}>
                 <Logo />
                 <form className={cn(s.form, 'mt-20')}>
