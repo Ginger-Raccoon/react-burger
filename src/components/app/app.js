@@ -15,8 +15,8 @@ function App() {
 
   return (
     <div className={cn(s.page)}>
-        <AppHeader />
         <Router>
+            <AppHeader />
             <Switch>
                 <Route path='/' exact >
                     <MainPage />
