@@ -1,21 +1,23 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import './style.module.css';
+import { Route, Switch, useLocation, useHistory } from 'react-router-dom';
+import AppHeader from "../app-header/app-header";
 import Modal from "../modal/modal";
+import './style.module.css';
 import {ResetPasswordPage, LoginPage, MainPage, RegisterPage, ProfilePage, FeedPage, OrderPage} from '../../pages'
 import cn from 'classnames';
 import s from './style.module.css';
 import {ForgotPasswordPage} from "../../pages/forgot-password/forgot-password";
-import AppHeader from "../app-header/app-header";
+import IngredientDetails from "../ingredient-details/ingredient-details";
+import {ProtectedRoute} from "../protected-route";
+import OrderDetails from "../order-details/order-details";
 
 function App() {
-    const { isOpen, title, content } = useSelector((store) => store.modal);
-
+    let location = useLocation();
+    const history = useHistory();
+    let background = (history.action === 'PUSH' || history.action === 'REPLACE') && location.state && location.state.background;
 
   return (
     <div className={cn(s.page)}>
-        <Router>
             <AppHeader />
             <Switch>
                 <Route path='/' exact >
@@ -43,11 +45,17 @@ function App() {
                     <OrderPage />
                 </Route>
                 <Route path='/ingredients/:id' exact >
-                    <h1>Здесь что-то будет... Но это не точно!</h1>
+                    <IngredientDetails />
                 </Route>
             </Switch>
-        </Router>
-        {isOpen && <Modal title={title}>{content}</Modal>}
+        {background &&
+            (<>
+                <Route path='/ingredients/:id' children={<Modal><IngredientDetails /></Modal>} />
+                <ProtectedRoute path='/profile/orders/:id' children={<Modal><OrderPage /></Modal>} />
+                <Route path='/feed/:id' children={<Modal><OrderPage /></Modal>} />
+                <ProtectedRoute path='/order' children={<Modal><OrderDetails /></Modal>} />
+            </>
+                )}
     </div>
   );
 }

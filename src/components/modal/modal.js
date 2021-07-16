@@ -1,20 +1,24 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import cn from 'classnames';
 import {  CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
+import { useHistory } from "react-router-dom";
 import s from './style.module.css';
 import ModalOverlay from "../modal-overlay/modal-overlay";
-import { CLOSE_MODAL } from '../../services/actions/modal'
+import { getIngredientsRequest } from '../../utils/api';
 
+const Modal = ({ children }) => {
+    let history = useHistory();
 
-const Modal = (props) => {
-    const dispatch = useDispatch()
+    useEffect(() => {
+        getIngredientsRequest()
+            .then((res) => {
+                console.log(res)
+            })
+    }, [])
     const closeModal = () => {
-        dispatch({
-            type: CLOSE_MODAL
-        })
+        history.goBack();
     }
 
     const close = (event) => {
@@ -23,7 +27,6 @@ const Modal = (props) => {
 
     useEffect(() => {
         window.addEventListener('keydown', close)
-
         return () => {
             window.removeEventListener('keydown', close)
         }
@@ -33,10 +36,9 @@ const Modal = (props) => {
         <>
         <div className={cn(s.popup)}>
             <div className={cn(s.popup__header, "mt-10  ", "ml-10", "mr-10")}>
-                <h1>{props.title}</h1>
                 <CloseIcon type="primary" onClick={closeModal}/>
             </div>
-            {props.children}
+            {children}
         </div>
             <ModalOverlay closeModal={closeModal}/>
         </>

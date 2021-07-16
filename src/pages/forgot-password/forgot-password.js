@@ -1,39 +1,38 @@
-import React, { useState, useRef } from 'react';
-import s from './forgot-password.module.css'
+import React, { useState, useRef, useCallback } from 'react';
+import s from './style.module.css'
 import cn from "classnames";
-import {Button, Input, Logo, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
-import {Link} from "react-router-dom";
-import { urlForgotPassword }  from '../../utils/constant'
+import {Button, Input, Logo } from "@ya.praktikum/react-developer-burger-ui-components";
+import { Link } from "react-router-dom";
+import { Redirect } from 'react-router-dom';
+import { forgotPassword } from '../../services/actions/auth';
+import { useDispatch } from 'react-redux';
 
 export function ForgotPasswordPage() {
     const inputRef = useRef(null)
     const [value, setValue] = useState('')
 
-    const onIconClick = (e) => {
-        setTimeout(() => inputRef.current.focus(), 0)
-        const inputName = e.target.closest('.input').querySelector('.input__placeholder').textContent;
-        alert(`Произошел тык в ${inputName}`)
-    }
+    const hasToken = localStorage.getItem('refreshToken');
+    const dispatch = useDispatch();
 
-    const submitForm = event => {
-        event.preventDefault()
-        return fetch(urlForgotPassword, {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ email: value })
-        })
-            .then((res) => {
-                if (res.ok) {
-                    return res.json();
-                } else {
-                    return Promise.reject(res.status)
-                }
-            })
-            .then( res => console.log(res))
-            .catch( err => console.log(err))
+    const onIconClick = useCallback(() => {
+        setTimeout(() => inputRef.current.focus(), 0);
+        alert('Icon Click Callback');
+    }, []);
+
+    const submitForm = (e) => {
+        e.preventDefault();
+        dispatch(forgotPassword(value))
     };
+
+    if (hasToken) {
+        return (
+            <Redirect
+                to={{
+                    pathname: '/'
+                }}
+            />
+        );
+    }
 
     return (
         <>

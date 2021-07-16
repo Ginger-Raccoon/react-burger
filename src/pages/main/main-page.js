@@ -1,21 +1,22 @@
-import s from './main.module.css'
+import s from './style.module.css'
 import cn from "classnames";
 import {DndProvider} from "react-dnd";
 import {HTML5Backend} from "react-dnd-html5-backend";
 import BurgerIngredients from "../../components/burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../../components/burger-constructor/burger-constructor";
 import React, {useEffect} from "react";
-import {CHOOSE_INGREDIENTS, getIngredients, INCREASE_COUNTER} from "../../services/actions/card";
+import { CHOOSE_INGREDIENTS, getIngredients, INCREASE_COUNTER } from "../../services/actions/ingredients";
 import {useDispatch, useSelector} from "react-redux";
+import Preloader from '../../components/preloader/preloader';
 
 export function MainPage() {
     const dispatch = useDispatch();
 
+    const { ingredientRequest, ingredientFailed, ingredientSuccess } = useSelector(store => store.ingredients);
+
     useEffect(() => {
         dispatch(getIngredients())
     },[dispatch])
-
-    const { data, ingredientRequest, ingredientFailed } = useSelector((store) => store.card);
 
     const handleDrop = (item) => {
         dispatch({
@@ -32,9 +33,9 @@ export function MainPage() {
     return (
         <>
             <div className={cn(s.main__container)}>
-                {ingredientRequest && "Загружаю булочки..."}
+                {ingredientRequest && <Preloader />}
                 {ingredientFailed && "Ошибка загрузки булочек..."}
-                {!ingredientRequest && !ingredientFailed && data.length && (
+                {!ingredientRequest && !ingredientFailed && ingredientSuccess && (
                     <DndProvider backend={HTML5Backend}>
                         <BurgerIngredients/>
                         <BurgerConstructor onDropHandler={handleDrop} />
@@ -43,5 +44,5 @@ export function MainPage() {
             </div>
         </>
     );
-};
+}
 

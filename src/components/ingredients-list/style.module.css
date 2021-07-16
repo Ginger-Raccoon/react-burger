@@ -4,4 +4,13 @@
     grid-gap: 32px 24px;
 }
 
+.link {
+    text-decoration: none;
+    color: #f2f2f3;
+}
+
+.ingredientsList__item {
+
+    list-style-type: none;
+}
 

@@ -5,37 +5,46 @@ import cn from 'classnames';
 import OrderDetails from "../order-details/order-details";
 import s from './style.module.css';
 import { useSelector, useDispatch } from 'react-redux';
-import { getOrder, OPEN_MODAL } from "../../services/actions/modal";
+import { createOrder } from '../../services/actions/ingredients';
 import { useDrop } from 'react-dnd';
-import {DECREASE_COUNTER, DELETE_INGREDIENT, MOVE_INGREDIENT, CLEAR_CONSTRUCTOR} from "../../services/actions/card";
+import {DECREASE_COUNTER, DELETE_INGREDIENT, MOVE_INGREDIENT, CLEAR_CONSTRUCTOR} from "../../services/actions/ingredients";
 import BurgerItem from '../burger-item/burger-item';
+import { push } from 'connected-react-router';
+import { useLocation, useHistory } from 'react-router-dom';
 
 const BurgerConstructor = ({ onDropHandler }) => {
-    const { bun, fillings } = useSelector(store => store.card.burgerIngredients);
     const dispatch = useDispatch();
+
+    const { bun, fillings } = useSelector(store => store.ingredients.burgerIngredients);
+
+    const location = useLocation();
+    const history = useHistory();
+    const hasToken = localStorage.getItem('refreshToken')
 
     const [{ canDrop, isHover }, dropTarget] = useDrop({
         accept: "ingredient",
         drop(itemId) {
             onDropHandler(itemId);
         },
-        collect: monitor => ({
+        collect: (monitor) => ({
             isHover: monitor.isOver(),
             canDrop: monitor.canDrop(),
         })
     });
 
     const handleClick = () => {
-        const ingredients = fillings.map(e => e._id)
-        dispatch(getOrder(ingredients))
-        dispatch({
-            type: OPEN_MODAL,
-            isOpen: true,
-            content: <OrderDetails />
-        })
-        dispatch({
-            type: CLEAR_CONSTRUCTOR
-        })
+        if (hasToken) {
+            const ingredientsId = fillings.map(e => e._id)
+            dispatch(createOrder([bun._id, ...ingredientsId]));
+            history.push({
+                pathname: '/order',
+                state: {
+                    background: location
+                }
+            });
+        } else {
+          dispatch(push('/login'))
+        }
     }
 
     const isActive = canDrop && isHover;
