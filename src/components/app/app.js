@@ -1,25 +1,33 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Route, Switch, useLocation, useHistory } from 'react-router-dom';
+import { useDispatch } from "react-redux";
 import AppHeader from "../app-header/app-header";
 import Modal from "../modal/modal";
 import './style.module.css';
-import {ResetPasswordPage, LoginPage, MainPage, RegisterPage, ProfilePage, FeedPage, OrderPage} from '../../pages'
+import { ResetPasswordPage, LoginPage, MainPage, RegisterPage, ProfilePage, FeedPage, OrderPage } from '../../pages'
 import cn from 'classnames';
 import s from './style.module.css';
 import {ForgotPasswordPage} from "../../pages/forgot-password/forgot-password";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import {ProtectedRoute} from "../protected-route";
 import OrderDetails from "../order-details/order-details";
+import { getIngredients } from "../../services/actions/ingredients";
 
 function App() {
     let location = useLocation();
     const history = useHistory();
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(getIngredients())
+    },[dispatch])
+
     let background = (history.action === 'PUSH' || history.action === 'REPLACE') && location.state && location.state.background;
 
   return (
     <div className={cn(s.page)}>
             <AppHeader />
-            <Switch>
+            <Switch location={background || location}>
                 <Route path='/' exact >
                     <MainPage />
                 </Route>
@@ -35,9 +43,6 @@ function App() {
                 <Route path='/reset-password' exact >
                     <ResetPasswordPage />
                 </Route>
-                <Route path='/profile'>
-                    <ProfilePage />
-                </Route>
                 <Route path='/feed' exact >
                     <FeedPage />
                 </Route>
@@ -47,6 +52,12 @@ function App() {
                 <Route path='/ingredients/:id' exact >
                     <IngredientDetails />
                 </Route>
+                <ProtectedRoute path='/profile'>
+                    <ProfilePage />
+                </ProtectedRoute>
+                <ProtectedRoute path='/profile/orders/:id' exact >
+                        <OrderPage />
+                </ProtectedRoute>
             </Switch>
         {background &&
             (<>

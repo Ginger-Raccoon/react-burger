@@ -23,7 +23,7 @@ const Ingredient = ({ item }) => {
 
     return (
         <div className={cn(s.ingredientsList__container)} ref={dragRef} style={{ opacity }} >
-            <img className={cn('ml-4', 'mr-4', 'mb-1')} src={item.image_large} alt={item.name} />
+            <img className={cn('ml-4', 'mr-4', 'mb-1')} src={item.image} alt={item.name} />
             <p className={s.price}>
                 <span className="text text_type_digits-default">{item.price}</span>
                 <CurrencyIcon type="primary" />

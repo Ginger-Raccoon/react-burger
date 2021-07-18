@@ -4,8 +4,7 @@ import {DndProvider} from "react-dnd";
 import {HTML5Backend} from "react-dnd-html5-backend";
 import BurgerIngredients from "../../components/burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../../components/burger-constructor/burger-constructor";
-import React, {useEffect} from "react";
-import { CHOOSE_INGREDIENTS, getIngredients, INCREASE_COUNTER } from "../../services/actions/ingredients";
+import { CHOOSE_INGREDIENTS, INCREASE_COUNTER } from "../../services/actions/ingredients";
 import {useDispatch, useSelector} from "react-redux";
 import Preloader from '../../components/preloader/preloader';
 
@@ -13,10 +12,6 @@ export function MainPage() {
     const dispatch = useDispatch();
 
     const { ingredientRequest, ingredientFailed, ingredientSuccess } = useSelector(store => store.ingredients);
-
-    useEffect(() => {
-        dispatch(getIngredients())
-    },[dispatch])
 
     const handleDrop = (item) => {
         dispatch({

@@ -1,5 +1,6 @@
 import { ServerConfig } from "./constants";
 import { getCookie, setCookie } from './functions';
+import { deleteCookie } from './functions';
 
 const requestHandler = (res) => {
     return res.ok ? res.json() : Promise.reject(res)
@@ -72,6 +73,9 @@ const fetchWithRefreshToken = (url, options) => {
                                 return fetch(url, options).then((res) => requestHandler(res))
                             })
                     } else {
+                        deleteCookie('token');
+                        localStorage.removeItem('refreshToken'); // eslint-disable-next-line
+                        location.reload()
                         return Promise.reject(err)
                     }
                 })
