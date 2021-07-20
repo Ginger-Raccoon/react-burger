@@ -20,7 +20,7 @@ const ingredientState = {
     ingredientRequest: false,
     ingredientFailed: false,
     ingredientSuccess: false,
-    allIngredients: {},
+    allIngredients: [],
     burgerIngredients: {
         bun: null,
         fillings: [],

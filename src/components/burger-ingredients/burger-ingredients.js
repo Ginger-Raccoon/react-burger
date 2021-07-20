@@ -5,10 +5,13 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 
 import IngredientsList from "../ingredients-list/ingredients-list";
 import { useSelector } from 'react-redux';
+import {filterArray} from "../../utils/functions";
 
 const BurgerIngredients = () => {
     const [current, setCurrent] = useState('bun')
-    const { bun, sauce, main } = useSelector(store => store.ingredients.allIngredients);
+    const ingredients = useSelector(store => store.ingredients.allIngredients);
+    const ingredientsObj = filterArray(ingredients)
+    const { bun, sauce, main } = ingredientsObj
 
     const rootRef = useRef(null);
     const bunRef = useRef(null);

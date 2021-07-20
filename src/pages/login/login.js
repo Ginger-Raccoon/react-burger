@@ -46,9 +46,9 @@ export function LoginPage() {
     if (userName || hasToken) {
         return (
             <Redirect
-                to={{
-                    pathname: '/'
-                }}
+                to={
+                    state?.from || '/'
+                }
             />
         );
     } else {

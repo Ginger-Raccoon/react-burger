@@ -5,11 +5,11 @@ import s from './style.module.css';
 import Ingredient from "../ingredient/ingredient";
 import { useLocation, Link } from "react-router-dom";
 
-const IngredientsList = React.forwardRef(({ingredients, id, title}, childRef) => {
+const IngredientsList = React.forwardRef(({ id, title, ingredients }, ref) => {
     let location = useLocation()
  return(
      <section>
-       <h3 className={cn('mt-10', 'mb-6', 'text', 'text_type_main-medium')} id={id} ref={childRef}>{title}</h3>
+       <h3 className={cn('mt-10', 'mb-6', 'text', 'text_type_main-medium')} id={id} ref={ref}>{title}</h3>
          <ul className={cn(s.ingredientsList__section, 'ml-4')}>
              {ingredients.map((item) => (
                  <li key={item._id} className={s.ingredientsList__item}>

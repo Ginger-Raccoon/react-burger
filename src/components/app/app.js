@@ -34,7 +34,7 @@ function App() {
                 <Route path='/login' exact >
                     <LoginPage />
                 </Route>
-                <Route path='/register' >
+                <Route path='/register' exact>
                     <RegisterPage />
                 </Route>
                 <Route path='/forgot-password' exact >
@@ -58,6 +58,11 @@ function App() {
                 <ProtectedRoute path='/profile/orders/:id' exact >
                         <OrderPage />
                 </ProtectedRoute>
+                <Route>
+                    <div className={s.container}>
+                        <h1> 404 Здесь ничего нет</h1>
+                    </div>
+                </Route>
             </Switch>
         {background &&
             (<>

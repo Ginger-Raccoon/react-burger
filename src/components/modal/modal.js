@@ -6,17 +6,10 @@ import PropTypes from 'prop-types';
 import { useHistory } from "react-router-dom";
 import s from './style.module.css';
 import ModalOverlay from "../modal-overlay/modal-overlay";
-import { getIngredientsRequest } from '../../utils/api';
 
 const Modal = ({ children }) => {
     let history = useHistory();
 
-    useEffect(() => {
-        getIngredientsRequest()
-            .then((res) => {
-                console.log(res)
-            })
-    }, [])
     const closeModal = () => {
         history.goBack();
     }

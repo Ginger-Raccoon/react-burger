@@ -22,11 +22,10 @@ export function getIngredients() {
         })
         getIngredientsRequest()
             .then((res) => {
-            const ingredientsObj = filterArray(res.data);
             if (res && res.success) {
                 dispatch({
                     type: GET_INGREDIENTS_SUCCESS,
-                    ingredients: ingredientsObj,
+                    ingredients: res.data,
                 })
             } else {
                 dispatch({
