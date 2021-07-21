@@ -29,7 +29,8 @@ const ingredientState = {
     currentOrder: null,
     currentBurger: null,
     orderRequest: false,
-    orderFailed: false
+    orderFailed: false,
+    loaded: false
 }
 
 export const ingredientsReducer  = (state = ingredientState, action) => {
@@ -39,7 +40,8 @@ export const ingredientsReducer  = (state = ingredientState, action) => {
             return {
                 ...state,
                 ingredientRequest: true,
-                ingredientFailed: false
+                ingredientFailed: false,
+                loaded: false,
             };
         }
         // Успешный запрос получения ингредиентов
@@ -49,7 +51,8 @@ export const ingredientsReducer  = (state = ingredientState, action) => {
                 ingredientRequest: false,
                 ingredientFailed: false,
                 allIngredients: action.ingredients,
-                ingredientSuccess: true
+                ingredientSuccess: true,
+                loaded: true
             };
         }
         // Неуспешный запрос получения ингредиентов

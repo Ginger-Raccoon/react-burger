@@ -4,13 +4,19 @@ import s from './style.module.css';
 import PropTypes from "prop-types";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
+import Preloader from '../preloader/preloader';
 
 
 export function IngredientDetails() {
     let { id } = useParams();
     const  allIngredients= useSelector((store) => store.ingredients.allIngredients);
     const item = allIngredients.find(el => el._id === id)
+    console.log(allIngredients)
+    const currentBurger = allIngredients.length ? allIngredients?.find(el => el._id === id) : null
 
+    if (!currentBurger) {
+        return (<Preloader />)
+    } else {
     return (
         <div className={cn(s.popup__container)}>
             <img src={item.image} alt='item_image' className={cn(s.popup__img, "mb-4")}/>
@@ -23,7 +29,7 @@ export function IngredientDetails() {
                 <li className={cn(s.info__carb, "text", "text_type_digits-default")}><p className={cn("text", "text_type_main-default", "mt-2")}>Углеводы, г</p> {item.carbohydrates}</li>
             </ul>
         </div>
-    );
+    );}
 };
 
 IngredientDetails.propTypes = {

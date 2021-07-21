@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Route, Switch, useLocation, useHistory } from 'react-router-dom';
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from 'react-redux';
 import AppHeader from "../app-header/app-header";
 import Modal from "../modal/modal";
 import './style.module.css';
@@ -17,10 +17,15 @@ function App() {
     let location = useLocation();
     const history = useHistory();
     const dispatch = useDispatch();
+    const { loaded } = useSelector(
+        (store) => store.ingredients
+    );
 
     useEffect(() => {
-        dispatch(getIngredients())
-    },[dispatch])
+        if (!loaded) {
+            dispatch(getIngredients())
+        }
+    },[dispatch, loaded])
 
     let background = (history.action === 'PUSH' || history.action === 'REPLACE') && location.state && location.state.background;
 

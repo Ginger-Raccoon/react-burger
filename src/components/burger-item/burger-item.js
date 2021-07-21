@@ -59,7 +59,7 @@ const BurgerItem = ({item, index, deleteIngredient, moveItem}) => {
         }),
     });
 
-    const opacity = isDrag ? .5 : 1;
+    const opacity = isDrag ? 0 : 1;
     drag(drop(ref))
     return (
         <li className={cn(s.list__item, "mb-5")} ref={ref} style={{ opacity }}>

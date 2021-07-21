@@ -1,10 +1,10 @@
 import React, { useState, useRef, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { Redirect, useLocation } from 'react-router-dom';
 import s from './style.module.css'
 import cn from 'classnames';
 import { Link } from 'react-router-dom';
-import {Logo, Input, PasswordInput, Button } from "@ya.praktikum/react-developer-burger-ui-components";
+import { Input, PasswordInput, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { login } from '../../services/actions/auth';
 
 export function LoginPage() {
@@ -13,6 +13,7 @@ export function LoginPage() {
         password: '',
     });
 
+    const location = useLocation()
 
     const userName = useSelector(store => store.auth.name)
 
@@ -44,10 +45,11 @@ export function LoginPage() {
     const hasToken = localStorage.getItem('refreshToken')
 
     if (userName || hasToken) {
+        const { from } = location.state || { from: { pathname: '/' } };
         return (
             <Redirect
                 to={
-                    state?.from || '/'
+                    from
                 }
             />
         );
