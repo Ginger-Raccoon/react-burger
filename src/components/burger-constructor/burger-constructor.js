@@ -92,7 +92,8 @@ const BurgerConstructor = ({ onDropHandler }) => {
                         <BurgerItem
                             item={el}
                             index={i}
-                            key={el._id}
+                            // key={el._id}
+                            key={el.productId}
                             deleteIngredient={deleteIngredient}
                             moveItem={moveItem}
                         />

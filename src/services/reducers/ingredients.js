@@ -1,4 +1,3 @@
-import { v4 as uuidv4 } from 'uuid';
 import {
     GET_INGREDIENTS_REQUEST, //Запрос на получение ингредиентов +
     GET_INGREDIENTS_FAILED, // Неуспешный запрос получения ингредиентов +
@@ -75,14 +74,24 @@ export const ingredientsReducer  = (state = ingredientState, action) => {
                     }
                 };
             } else {
-                const newItem = { ...action.item, productId: uuidv4() }
+                // const newItem = { ...action.item, productId: uuidv4() }
+                // return {
+                //     ...state,
+                //     burgerIngredients: {
+                //         ...state.burgerIngredients,
+                //         fillings: [...state.burgerIngredients.fillings, newItem]
+                //     }
+                // };
                 return {
                     ...state,
                     burgerIngredients: {
                         ...state.burgerIngredients,
-                        fillings: [...state.burgerIngredients.fillings, newItem]
+                        fillings: [
+                            ...state.burgerIngredients.fillings,
+                            action.item
+                        ]
                     }
-                };
+                }
             }
         }
         // Удаление ингредиента

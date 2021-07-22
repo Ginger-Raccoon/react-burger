@@ -17,15 +17,10 @@ function App() {
     let location = useLocation();
     const history = useHistory();
     const dispatch = useDispatch();
-    const { loaded } = useSelector(
-        (store) => store.ingredients
-    );
 
     useEffect(() => {
-        if (!loaded) {
             dispatch(getIngredients())
-        }
-    },[dispatch, loaded])
+},[dispatch])
 
     let background = (history.action === 'PUSH' || history.action === 'REPLACE') && location.state && location.state.background;
 

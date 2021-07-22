@@ -7,6 +7,7 @@ import BurgerConstructor from "../../components/burger-constructor/burger-constr
 import { CHOOSE_INGREDIENTS, INCREASE_COUNTER } from "../../services/actions/ingredients";
 import {useDispatch, useSelector} from "react-redux";
 import Preloader from '../../components/preloader/preloader';
+import { v4 as uuidv4 } from 'uuid';
 
 export function MainPage() {
     const dispatch = useDispatch();
@@ -14,9 +15,10 @@ export function MainPage() {
     const { ingredientRequest, ingredientFailed, ingredientSuccess } = useSelector(store => store.ingredients);
 
     const handleDrop = (item) => {
+        const newItem = { ...item, productId: uuidv4() };
         dispatch({
             type: CHOOSE_INGREDIENTS,
-            item
+            item: newItem
         })
         dispatch({
             type: INCREASE_COUNTER,
