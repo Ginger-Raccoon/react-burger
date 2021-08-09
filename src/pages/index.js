@@ -1,6 +1,6 @@
 import { MainPage } from "./main/main-page";
 import { LoginPage } from "./login/login";
-import { RegisterPage } from  "./register/register";
+import { RegisterPage } from  "./register/register.tsx";
 import { ResetPasswordPage } from "./reset-password/reset-password";
 import { ProfilePage } from "./profile/profile";
 import { FeedPage } from "./feed/feed";

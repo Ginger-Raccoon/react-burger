@@ -20,9 +20,7 @@
     overflow-y: scroll;
 }
 
-.order {
-    max-width: 790px;
-}
+
 
 ::-webkit-scrollbar {
     width: 12px;
@@ -37,11 +35,6 @@
     background: #8585AD;
     border: 2px solid #2F2F37;
     border-radius: 6px;
-}
-
-.order__link {
-    text-decoration: none;
-    color: #F2F2F3;
 }
 
 .notFound {
