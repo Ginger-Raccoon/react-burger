@@ -77,9 +77,11 @@ export function ResetPasswordPage() {
                             errorText={'Ooops'}
                             size={'default'}
                         />
-                        <Button type="primary" size="small" className={cn('mt-10')}>
-                            <p className={cn("text text_type_main-default")}>Сохранить</p>
-                        </Button>
+                        <div className={cn('mt-10')}>
+                            <Button type="primary" size="small" >
+                                <p className={cn("text text_type_main-default")}>Сохранить</p>
+                            </Button>
+                        </div>
                     </form>
                     <div className={cn(s.support__container, 'mt-20')}>
                         <span className={cn('text text_type_main-default text_color_inactive')}>Вспомнили пароль?

@@ -24,7 +24,7 @@ const Modal: FC = ({ children }) => {
         return () => {
             window.removeEventListener('keydown', close)
         }
-    },[])
+    })
 
     return modalRoot && ReactDOM.createPortal ((
         <>

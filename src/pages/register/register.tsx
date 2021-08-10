@@ -78,9 +78,11 @@ export function RegisterPage() {
                             name={'password'}
                             onChange={handleInputChange}
                         />
-                        <Button type="primary" size="small" className={cn('mt-10')}>
-                            <p className={cn("text text_type_main-default")}>Зарегистрироваться</p>
-                        </Button>
+                        <div className={cn('mt-10')}>
+                            <Button type="primary" size="small" >
+                                <p className={cn("text text_type_main-default")}>Зарегистрироваться</p>
+                            </Button>
+                        </div>
                     </form>
                 </div>
                 <div className={cn('mt-20')}>

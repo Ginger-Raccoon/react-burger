@@ -34,8 +34,8 @@ const BurgerIngredients = () => {
     return (
         <div className={cn(s.container)}>
             <h2 className={cn('mt-10', 'mb-5', 'text', 'text_type_main-large')}>Соберите бургер</h2>
-            <div style={{ display: 'flex' }}>
-                <Tab value="bun" active={current === 'bun'} onClick={setCurrent} className={cn("text", "text_type_main-default")}>
+            <div style={{ display: 'flex' }} className={cn("text", "text_type_main-default")}>
+                <Tab value="bun" active={current === 'bun'} onClick={setCurrent} >
                     Булки
                 </Tab>
                 <Tab value="sauce" active={current === 'sauce'} onClick={setCurrent}>

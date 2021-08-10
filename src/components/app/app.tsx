@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Route, Switch, useLocation, useHistory } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import AppHeader from "../app-header/app-header";
 import Modal from "../modal/modal";
 import './style.module.css';
