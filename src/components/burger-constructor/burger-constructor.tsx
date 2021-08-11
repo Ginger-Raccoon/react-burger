@@ -2,7 +2,7 @@ import React, { useCallback, FC } from 'react';
 import { ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import cn from 'classnames';
 import s from './style.module.css';
-import { useSelector, useDispatch } from '../../hooks';
+import { useSelector, useDispatch } from '../../hooks/hooks';
 import { createOrder } from '../../services/actions/ingredients';
 import { useDrop } from 'react-dnd';
 import { DECREASE_COUNTER, DELETE_INGREDIENT, MOVE_INGREDIENT } from '../../services/constants/ingredients';

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import s from './style.module.css'
 import { Route, Switch, Link } from 'react-router-dom';
 import cn from "classnames";
-import { useDispatch, useSelector } from '../../hooks';
+import { useDispatch, useSelector } from '../../hooks/hooks';
 import { getUser } from '../../services/actions/auth';
 import { NavProfile } from "../../components/nav-profile/nav-profile";
 import { FormProfile } from "../../components/forms-profile/forms-profile";

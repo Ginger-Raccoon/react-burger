@@ -1,7 +1,7 @@
 import React, { useEffect, FC } from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import { refreshToken } from '../services/actions/auth'
-import { useSelector, useDispatch } from '../hooks';
+import { useSelector, useDispatch } from '../hooks/hooks';
 import Preloader from './preloader/preloader';
 
 export const ProtectedRoute: FC<{ 

@@ -2,7 +2,7 @@ import React from 'react';
 import s from './style.module.css';
 import cn from 'classnames';
 import done from '../../images/done.png'
-import {useSelector} from '../../hooks';
+import {useSelector} from '../../hooks/hooks';
 import Preloader from '../preloader/preloader';
 
 const OrderDetails = () => {

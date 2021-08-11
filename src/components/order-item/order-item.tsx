@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import s from './style.module.css';
 import cn from "classnames";
-import { useSelector } from '../../hooks';
+import { useSelector } from '../../hooks/hooks';
 import { createCardDate, getPrice, getBurgerIngredients } from '../../utils/functions';
 import {CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import { getStatus } from '../../utils/functions';

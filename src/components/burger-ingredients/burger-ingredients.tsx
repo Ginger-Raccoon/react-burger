@@ -4,7 +4,7 @@ import s from './style.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 
 import IngredientsList from "../ingredients-list/ingredients-list";
-import { useSelector } from '../../hooks';
+import { useSelector } from '../../hooks/hooks';
 import { filterArray } from "../../utils/functions";
 
 const BurgerIngredients = () => {

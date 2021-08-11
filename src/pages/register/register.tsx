@@ -3,7 +3,7 @@ import s from './style.module.css'
 import {Button, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import cn from "classnames";
 import {Link} from "react-router-dom";
-import { useDispatch } from '../../hooks';
+import { useDispatch } from '../../hooks/hooks';
 import { Redirect } from 'react-router-dom';
 import { register } from '../../services/actions/auth';
 

@@ -1,7 +1,7 @@
 import cn from "classnames";
 import s from "./style.module.css"
 import { NavLink, useLocation } from "react-router-dom";
-import { useDispatch } from '../../hooks';
+import { useDispatch } from '../../hooks/hooks';
 import { logout } from '../../services/actions/auth';
 import React from "react";
 

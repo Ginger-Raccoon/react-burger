@@ -2,7 +2,7 @@ import cn from "classnames";
 import s from "./style.module.css";
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import React, {useState, useEffect, SyntheticEvent} from "react";
-import { useSelector, useDispatch } from '../../hooks';
+import { useSelector, useDispatch } from '../../hooks/hooks';
 import { updateUser } from '../../services/actions/auth';
 import Preloader from '../preloader/preloader';
 

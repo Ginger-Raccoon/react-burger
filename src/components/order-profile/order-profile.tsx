@@ -3,7 +3,7 @@ import cn from 'classnames';
 import s from './order-profile.module.css';
 import { Link, useLocation } from 'react-router-dom';
 import OrderItem from '../order-item/order-item';
-import { useDispatch, useSelector } from '../../hooks';
+import { useDispatch, useSelector } from '../../hooks/hooks';
 import { WS_CONNECTION_START_AUTH, WS_CONNECTION_CLOSE_AUTH } from '../../services/constants/ws-actions-auth';
 import { TOrder } from '../../types';
 

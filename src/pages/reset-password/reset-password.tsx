@@ -5,7 +5,7 @@ import cn from "classnames";
 import { Redirect, Link } from 'react-router-dom';
 import { resetPassword } from '../../services/actions/auth';
 import { resetPasswordRequest } from '../../utils/api';
-import { useSelector, useDispatch } from '../../hooks';
+import { useSelector, useDispatch } from '../../hooks/hooks';
 
 export function ResetPasswordPage() {
     const [state, setState] = useState({

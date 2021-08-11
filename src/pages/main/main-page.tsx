@@ -6,7 +6,7 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 import BurgerIngredients from "../../components/burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../../components/burger-constructor/burger-constructor";
 import { CHOOSE_INGREDIENTS, INCREASE_COUNTER } from '../../services/constants/ingredients';
-import { useDispatch, useSelector } from '../../hooks';
+import { useDispatch, useSelector } from '../../hooks/hooks';
 import Preloader from '../../components/preloader/preloader';
 import { v4 as uuidv4 } from 'uuid';
 import { TIngredient } from '../../types';

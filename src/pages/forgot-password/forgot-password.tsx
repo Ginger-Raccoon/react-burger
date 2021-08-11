@@ -5,7 +5,7 @@ import {Button, Input, Logo } from "@ya.praktikum/react-developer-burger-ui-comp
 import { Link } from "react-router-dom";
 import { Redirect } from 'react-router-dom';
 import { forgotPassword } from '../../services/actions/auth';
-import { useDispatch } from '../../hooks';
+import { useDispatch } from '../../hooks/hooks';
 
 export function ForgotPasswordPage() {
     const [value, setValue] = useState('')

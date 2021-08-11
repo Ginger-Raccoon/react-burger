@@ -6,7 +6,7 @@ import OrderItem from "../../components/order-item/order-item";
 import { WS_CONNECTION_START, WS_CONNECTION_CLOSE } from '../../services/constants/ws-actions';
 import { TOrder } from '../../types';
 import Preloader from '../../components/preloader/preloader';
-import { useSelector, useDispatch } from '../../hooks';
+import { useSelector, useDispatch } from '../../hooks/hooks';
 import { filterOrdersByStatus } from '../../utils/functions';
 
 

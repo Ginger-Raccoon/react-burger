@@ -1,5 +1,5 @@
 import React, { useState, SyntheticEvent } from 'react';
-import { useDispatch, useSelector } from '../../hooks';
+import { useDispatch, useSelector } from '../../hooks/hooks';
 import { Redirect } from 'react-router-dom';
 import s from './style.module.css'
 import cn from 'classnames';

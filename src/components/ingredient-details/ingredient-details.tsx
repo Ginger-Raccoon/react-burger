@@ -2,7 +2,7 @@ import React from 'react';
 import cn from 'classnames';
 import s from './style.module.css';
 import { useParams } from "react-router-dom";
-import { useSelector } from '../../hooks';
+import { useSelector } from '../../hooks/hooks';
 import Preloader from '../preloader/preloader';
 import { TIngredient } from '../../types';
 
