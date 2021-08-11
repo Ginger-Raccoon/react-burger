@@ -95,8 +95,9 @@ export type TWSAction = {
 	onError: string,
 	onMessage: string
 }
-
-
+// При данном подходе возникает ошибка типов в файле src/services/middleware/socketMiddleware.ts
+// Скрин прикрепил на GitHub
+// export type TWSAction = TWSActionsActions | TWSActionsAuthActions 
 
 export type TLocationTemplate = {
 	background?: any;

@@ -23,7 +23,7 @@ export function FeedPage() {
 
     const { orders, total, totalToday } = useSelector((store) => store.ws)
     const statusArrays = filterOrdersByStatus(orders)
-    const doneArray = statusArrays?.done.slice(0, 30);
+    const doneArray = statusArrays?.done.slice(0, 20);
 
     if (!orders) {
         return <Preloader />

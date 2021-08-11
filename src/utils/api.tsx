@@ -66,6 +66,7 @@ export const signUpRequest = ({ email, password, name }: TUserData) => {
 
 // Войти
 export const signInRequest = ({ email, password }: TUserData) => {
+    console.log(email, password)
     return fetch(`${ServerConfig.baseUrl}/auth/login`, {
         method: 'POST',
         mode: 'cors',

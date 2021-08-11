@@ -9,7 +9,7 @@ import { login } from '../../services/actions/auth';
 
 export function LoginPage() {
     const [state, setState] = useState({
-        login: '',
+        email: '',
         password: '',
     });
 
@@ -52,8 +52,8 @@ export function LoginPage() {
                         type={'text'}
                         placeholder={'E-mail'}
                         onChange={handleInputChange}
-                        value={state.login}
-                        name={'login'}
+                        value={state.email}
+                        name={'email'}
                         error={false}
                         errorText={'Ooops...'}
                         size={'default'}

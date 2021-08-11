@@ -3,7 +3,7 @@ import s from './style.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import cn from 'classnames';
 import { useParams, Redirect, useRouteMatch } from 'react-router-dom';
-import { ordersData } from "../../utils/data";
+
 import { useDispatch, useSelector } from '../../hooks/hooks';
 import { getOrder, getUserOrder } from '../../services/actions/ingredients';
 import Preloader from '../../components/preloader/preloader';
