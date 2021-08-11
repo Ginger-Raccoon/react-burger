@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, FC } from 'react';
 import { Route, Switch, useLocation, useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import AppHeader from "../app-header/app-header";
@@ -14,7 +14,7 @@ import OrderDetails from "../order-details/order-details";
 import { getIngredients } from "../../services/actions/ingredients";
 import { TLocationTemplate } from '../../types';
 
-function App() {
+const App: FC = () => {
     let location = useLocation<TLocationTemplate>();
     const history = useHistory();
     const dispatch = useDispatch();
@@ -23,9 +23,9 @@ function App() {
             dispatch(getIngredients())
 },[dispatch])
 
-    let background = (history.action === 'PUSH' || history.action === 'REPLACE') && location.state && location.state.background;
+    const background = (history.action === 'PUSH' || history.action === 'REPLACE') && location.state && location.state.background;
 
-  return (
+return (
     <div className={cn(s.page)}>
             <AppHeader />
             <Switch location={background || location}>
@@ -74,7 +74,7 @@ function App() {
             </>
                 )}
     </div>
-  );
+);
 }
 
 export default App;

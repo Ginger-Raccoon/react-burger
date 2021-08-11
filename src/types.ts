@@ -96,6 +96,8 @@ export type TWSAction = {
 	onMessage: string
 }
 
+
+
 export type TLocationTemplate = {
 	background?: any;
 }
