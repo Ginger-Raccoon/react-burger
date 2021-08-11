@@ -1,6 +1,6 @@
 import { ThunkAction } from 'redux-thunk';
 import { Action, ActionCreator } from 'redux';
-import { store } from './store';
+import { store } from './services/store';
 import { TAuthActions } from './services/actions/auth';
 import { TIngredientsActions } from './services/actions/ingredients';
 import { TWSActionsAuthActions } from './services/actions/ws-actions-auth';

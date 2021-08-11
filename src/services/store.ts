@@ -1,11 +1,11 @@
 import { compose, createStore, applyMiddleware } from 'redux';
-import { rootReducer, history } from './services/reducers';
-import { socketMiddleware } from './services/middleware';
+import { rootReducer, history } from './reducers';
+import { socketMiddleware } from './middleware';
 import { routerMiddleware } from 'connected-react-router';
 import thunk from 'redux-thunk';
-import { wsActions } from './services/actions/ws-actions';
-import { wsActionsAuth } from './services/actions/ws-actions-auth';
-import { WS_URL, WS_URL_AUTH } from './constants/config';
+import { wsActions } from './actions/ws-actions';
+import { wsActionsAuth } from './actions/ws-actions-auth';
+import { WS_URL, WS_URL_AUTH } from '../constants/config';
 
 declare global {
     interface Window {
