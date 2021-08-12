@@ -3,8 +3,11 @@ import { Action, ActionCreator } from 'redux';
 import { store } from './services/store';
 import { TAuthActions } from './services/actions/auth';
 import { TIngredientsActions } from './services/actions/ingredients';
-import { TWSActionsAuthActions } from './services/actions/ws-actions-auth';
-import { TWSActionsActions } from './services/actions/ws-actions';
+
+import { TWSActionsAuthActions, wsActionsAuth } from './services/actions/ws-actions-auth';
+import { TWSActionsActions, wsActions } from './services/actions/ws-actions';пш
+
+
 
 type TApplicationActions = TAuthActions | TIngredientsActions | TWSActionsAuthActions | TWSActionsActions;
 export type RootState = ReturnType<typeof store.getState>;
@@ -86,18 +89,7 @@ export type TBurgerIngredients = {
 	counts: TCountsIngredients
 }
 
-export type TWSAction = {
-	wsInit: string,
-	wsClose: string,
-	wsSendMessage: string,
-	onOpen: string,
-	onClose: string,
-	onError: string,
-	onMessage: string
-}
-// При данном подходе возникает ошибка типов в файле src/services/middleware/socketMiddleware.ts
-// Скрин прикрепил на GitHub
-// export type TWSAction = TWSActionsActions | TWSActionsAuthActions 
+export type TWSAction = typeof wsActions | typeof wsActionsAuth
 
 export type TLocationTemplate = {
 	background?: any;
