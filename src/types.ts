@@ -5,9 +5,7 @@ import { TAuthActions } from './services/actions/auth';
 import { TIngredientsActions } from './services/actions/ingredients';
 
 import { TWSActionsAuthActions, wsActionsAuth } from './services/actions/ws-actions-auth';
-import { TWSActionsActions, wsActions } from './services/actions/ws-actions';пш
-
-
+import { TWSActionsActions, wsActions } from './services/actions/ws-actions';
 
 type TApplicationActions = TAuthActions | TIngredientsActions | TWSActionsAuthActions | TWSActionsActions;
 export type RootState = ReturnType<typeof store.getState>;
@@ -15,7 +13,6 @@ export type AppDispatch = typeof store.dispatch;
 export type AppThunk<ReturnType = void> = ActionCreator<
 	ThunkAction<ReturnType, Action, RootState, TApplicationActions>
 >;
-
 
 export type TIngredient = {
 	_id: string;

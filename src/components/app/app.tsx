@@ -44,20 +44,20 @@ return (
                 <Route path='/reset-password' exact >
                     <ResetPasswordPage />
                 </Route>
-                <Route path='/feed' exact >
-                    <FeedPage />
-                </Route>
                 <Route path='/feed/:id' exact >
                     <OrderPage />
+                </Route>
+                <Route path='/feed' exact >
+                    <FeedPage />
                 </Route>
                 <Route path='/ingredients/:id' exact >
                     <IngredientDetails />
                 </Route>
-                <ProtectedRoute path='/profile'>
-                    <ProfilePage />
-                </ProtectedRoute>
                 <ProtectedRoute path='/profile/orders/:id' exact >
                         <OrderPage />
+                </ProtectedRoute>
+                <ProtectedRoute path='/profile'>
+                    <ProfilePage />
                 </ProtectedRoute>
                 <Route>
                     <div className={s.container}>
