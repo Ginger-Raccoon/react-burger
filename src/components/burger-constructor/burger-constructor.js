@@ -4,53 +4,68 @@ import cn from 'classnames';
 import OrderDetails from "../order-details/order-details";
 import PropTypes from 'prop-types';
 import s from './style.module.css';
+import {useContext} from "react";
+import {BurgerContext} from "../../services/burgerContext";
+import {urlOrder} from "../../utils/constant";
+import { v4 as uuidv4 } from 'uuid'
 
 const BurgerConstructor = (props) => {
     const img = "https://code.s3.yandex.net/react/code/bun-02.png"
-
-    const openModal = () => {
-        props.setModal({
-            isOpen: true,
-            content: <OrderDetails />
+    const { state, setState } = useContext(BurgerContext);
+    const { bun, filling } = state.burgerIngredients;
+    const handleClick = () => {
+        const ingredients = filling.map(e => e._id)
+        fetch(urlOrder, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ingredients})
         })
+            .then((res) => {
+                if (res.ok) {
+                    return res.json()
+                } else {
+                    throw new Error('Ошибка сети')
+                }
+            })
+            .then((data) => {
+                props.setModal({
+                    isOpen: true,
+                    content: <OrderDetails orderNum={data.order.number} />
+                })
+            })
+            .catch((err) => console.log(err))
+
     }
+    const total = (bun, filling) => {
+        return bun.price * 2 + filling.reduce((acc, curr) => acc += curr.price, 0)
+    }
+    console.log(bun)
     return (
         <div className={cn(s.container, "mt-25")}>
             <header className={cn(s.container__head, "mb-5")}>
-                <ConstructorElement type="top" isLocked={true} text="Краторная булка N-200i (верх)" price={200} thumbnail={img} />
+                <ConstructorElement type="top" isLocked={true} text={`${bun.name} (верх)`} price={bun.price} thumbnail={bun.image} />
             </header>
             <ul className={s.list}>
-                <li className={cn(s.list__item, "mb-5")}>
-                    <DragIcon type="primary" />
-                    <ConstructorElement text="Краторная булка N-200i (верх)" price={50} thumbnail={img} />
-                </li>
-                <li className={cn(s.list__item, "mb-5")}>
-                    <DragIcon type="primary" />
-                    <ConstructorElement text="Краторная булка N-200i (верх)" price={50} thumbnail={img} />
-                </li>
-                <li className={cn(s.list__item, "mb-5")}>
-                    <DragIcon type="primary" />
-                    <ConstructorElement text="Краторная булка N-200i (верх)" price={50} thumbnail={img} />
-                </li>
-                <li className={cn(s.list__item, "mb-5")}>
-                    <DragIcon type="primary" />
-                    <ConstructorElement text="Краторная булка N-200i (верх)" price={50} thumbnail={img} />
-                </li>
-                <li className={cn(s.list__item, "mb-5")}>
-                    <DragIcon type="primary" />
-                    <ConstructorElement text="Краторная булка N-200i (верх)" price={50} thumbnail={img} />
-                </li>
+                {filling.map(e => (
+                    <li className={cn(s.list__item, "mb-5")} key={uuidv4()}>
+                        <DragIcon type="primary" />
+                        <ConstructorElement text={e.name} price={e.price} thumbnail={e.image} />
+                    </li>
+                    ))
+                }
             </ul>
             <div className={cn(s.container__end, "mb-10")}>
-                <ConstructorElement type="bottom" isLocked={true} text="Краторная булка N-200i (низ)" price={200} thumbnail={img} />
+                <ConstructorElement type="bottom" isLocked={true} text={`${bun.name} (низ)`} price={bun.price} thumbnail={bun.image} />
             </div>
 
             <div className={s.total}>
                 <div className={cn(s.price, 'mr-10')}>
-                    <span className="text text_type_digits-default">610</span>
+                    <span className="text text_type_digits-default">{total(bun, filling)}</span>
                     <CurrencyIcon type="primary" />
                 </div>
-                <Button type="primary" size="large" onClick={openModal}>
+                <Button type="primary" size="large" onClick={handleClick}>
                     Оформить заказ
                 </Button>
             </div>

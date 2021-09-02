@@ -1,28 +1,44 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import cn from 'classnames';
 import s from './style.module.css';
 import PropTypes from 'prop-types';
 
-import Cards from "../card/card";
+import IngredientsList from "../Ingredients-list/Ingredients-list";
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import IngredientDetails from "../ingredient-details/ingredient-details";
+import {BurgerContext} from "../../services/burgerContext";
 
-const BurgerIngredients = ({data, setModal}) => {
+const BurgerIngredients = ({setModal}) => {
     const [current, setCurrent] = React.useState('one')
+    const { state, setState } = useContext(BurgerContext);
 
-    const getData = (data) => {
-        console.log(data)
+    const getData = (item) => {
+        item.type === 'bun' ?
+            setState({
+                ...state,
+                burgerIngredients: {
+                    ...state.burgerIngredients,
+                    bun: item
+                }
+            }) :
+            setState({
+                ...state,
+                burgerIngredients: {
+                    ...state.burgerIngredients,
+                    filling: [...state.burgerIngredients.filling, item]
+                }
+            })
         setModal ({
                 isOpen: true,
-                content: <IngredientDetails item={data}/>,
+                content: <IngredientDetails item={item}/>,
                 title: 'Детали ингредиента'
                 }
         )
     }
 
-    const bun = data.filter((i) => i.type === "bun");
-    const sauce = data.filter((i) => i.type === "sauce");
-    const main = data.filter((i) => i.type === "main");
+    const bun = state.data.filter((i) => i.type === "bun");
+    const sauce = state.data.filter((i) => i.type === "sauce");
+    const main = state.data.filter((i) => i.type === "main");
     return (
         <div className={cn(s.container)}>
             <h2 className={cn('mt-10', 'mb-5', 'text', 'text_type_main-large')}>Соберите бургер</h2>
@@ -38,9 +54,9 @@ const BurgerIngredients = ({data, setModal}) => {
                 </Tab>
             </div>
             <div className={cn(s.card__container)}>
-                <Cards title='Булки' ingredients={ bun } getData={getData}/>
-                <Cards title='Соусы' ingredients={ sauce } getData={getData}/>
-                <Cards title='Начинки' ingredients={ main } getData={getData}/>
+                <IngredientsList title='Булки' ingredients={ bun } getData={getData}/>
+                <IngredientsList title='Соусы' ingredients={ sauce } getData={getData}/>
+                <IngredientsList title='Начинки' ingredients={ main } getData={getData}/>
             </div>
         </div>
 )

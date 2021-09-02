@@ -1,10 +1,10 @@
-.cards__section {
+.ingredientsList__section {
     display: flex;
     flex-wrap: wrap;
     grid-gap: 32px 24px;
 }
 
-.card__container {
+.ingredientsList__container {
     position: relative;
 }
 
