@@ -1,17 +1,20 @@
 import React, { useState } from 'react';
-import s from './reset-password.module.css'
-import AppHeader from "../../components/app-header/app-header";
+import s from './style.module.css'
 import {Button, Input, Logo, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import cn from "classnames";
-import {Link} from "react-router-dom";
-import { urlResetPassowrd } from '../../utils/constant'
+import { Redirect, Link } from 'react-router-dom';
+import { resetPassword } from '../../services/actions/auth';
+import { resetPasswordRequest } from '../../utils/api';
+import { useSelector, useDispatch } from 'react-redux';
 
 export function ResetPasswordPage() {
     const inputRef = React.useRef(null)
     const [state, setState] = useState({
         password: '',
         token: ''
-    })
+    });
+
+    const dispatch = useDispatch();
 
     const handleInputChange = (event) => {
         const target = event.target;
@@ -31,62 +34,69 @@ export function ResetPasswordPage() {
 
     const formSubmit = event => {
         event.preventDefault()
-        return fetch(urlResetPassowrd, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                password: state.password,
-                token: state.token
-            })
-        })
+        dispatch(resetPassword(state))
+        resetPasswordRequest(state)
             .then((res) => {
-                if (res.ok) {
-                    return res.json();
-                } else {
-                    return Promise.reject(res.status)
-                }
+                console.log(res);
             })
-            .then(res => console.log(res))
-            .catch(err => console.log(err))
+            .catch((err) => {
+                console.log(err);
+            });
     }
 
+    const isforgotPasswordSuccess = useSelector(store => store.auth.isforgotPasswordSuccess);
 
-    return (
-        <>
-            <AppHeader />
-            <div className={cn(s.container, 'mt-20')}>
-                <Logo />
-                <form className={cn(s.form, 'mt-20')} onSubmit={formSubmit}>
-                    <h3 className={cn("text text_type_main-medium")}>Восстановление пароля</h3>
-                    <PasswordInput
-                        value={state.password}
-                        name={'password'}
-                        onChange={handleInputChange}
-                    />
-                    <Input
-                        type={'text'}
-                        placeholder={'Введите код из письма'}
-                        onChange={handleInputChange}
-                        value={state.token}
-                        name={'token'}
-                        error={false}
-                        ref={inputRef}
-                        onIconClick={onIconClick}
-                        errorText={'Ooops'}
-                        size={'default'}
-                    />
-                    <Button type="primary" size="small" className={cn('mt-10')}>
-                        <p className={cn("text text_type_main-default")}>Сохранить</p>
-                    </Button>
-                </form>
-                <div className={cn(s.support__container, 'mt-20')}>
-                <span className={cn('text text_type_main-default text_color_inactive')}>Уже зарегистрированы?
-                    <Link to='/login' className={cn('text text_type_main-default pl-2', s.link )}>Войти</Link>
-                </span>
+    if (localStorage.getItem('refreshToken')) {
+        return (
+            <Redirect
+                to={{
+                    pathname: '/'
+                }}
+            />
+        );
+    } else if (!localStorage.getItem('refreshToken') && !isforgotPasswordSuccess) {
+        return (
+            <Redirect
+                to={{
+                    pathname: '/forgot-password'
+                }}
+            />
+        );
+    } else {
+        return (
+            <>
+                <div className={cn(s.container, 'mt-20')}>
+                    <Logo/>
+                    <form className={cn(s.form, 'mt-20')} onSubmit={formSubmit}>
+                        <h3 className={cn("text text_type_main-medium")}>Восстановление пароля</h3>
+                        <PasswordInput
+                            value={state.password}
+                            name={'password'}
+                            onChange={handleInputChange}
+                        />
+                        <Input
+                            type={'text'}
+                            placeholder={'Введите код из письма'}
+                            onChange={handleInputChange}
+                            value={state.token}
+                            name={'token'}
+                            error={false}
+                            ref={inputRef}
+                            onIconClick={onIconClick}
+                            errorText={'Ooops'}
+                            size={'default'}
+                        />
+                        <Button type="primary" size="small" className={cn('mt-10')}>
+                            <p className={cn("text text_type_main-default")}>Сохранить</p>
+                        </Button>
+                    </form>
+                    <div className={cn(s.support__container, 'mt-20')}>
+                        <span className={cn('text text_type_main-default text_color_inactive')}>Вспомнили пароль?
+                            <Link to='/login' className={cn('text text_type_main-default pl-2', s.link)}>Войти</Link>
+                        </span>
+                    </div>
                 </div>
-            </div>
-        </>
-    );
+            </>
+        );
+    }
 }

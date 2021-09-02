@@ -1,51 +1,77 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import './style.module.css';
+import React, { useEffect } from 'react';
+import { Route, Switch, useLocation, useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import AppHeader from "../app-header/app-header";
 import Modal from "../modal/modal";
-import {ResetPasswordPage, LoginPage, MainPage, RegisterPage, ProfilePage, FeedPage, OrderPage} from '../../pages'
+import './style.module.css';
+import { ResetPasswordPage, LoginPage, MainPage, RegisterPage, ProfilePage, FeedPage, OrderPage } from '../../pages'
 import cn from 'classnames';
 import s from './style.module.css';
 import {ForgotPasswordPage} from "../../pages/forgot-password/forgot-password";
+import IngredientDetails from "../ingredient-details/ingredient-details";
+import {ProtectedRoute} from "../protected-route";
+import OrderDetails from "../order-details/order-details";
+import { getIngredients } from "../../services/actions/ingredients";
 
 function App() {
-    const { isOpen, title, content } = useSelector((store) => store.modal);
+    let location = useLocation();
+    const history = useHistory();
+    const dispatch = useDispatch();
 
+    useEffect(() => {
+            dispatch(getIngredients())
+},[dispatch])
+
+    let background = (history.action === 'PUSH' || history.action === 'REPLACE') && location.state && location.state.background;
 
   return (
     <div className={cn(s.page)}>
-        <Router>
-            <Switch>
-                <Route path='/' exact={true}>
+            <AppHeader />
+            <Switch location={background || location}>
+                <Route path='/' exact >
                     <MainPage />
                 </Route>
-                <Route path='/login' exact={true}>
+                <Route path='/login' exact >
                     <LoginPage />
                 </Route>
-                <Route path='/register' exact={true}>
+                <Route path='/register' exact>
                     <RegisterPage />
                 </Route>
-                <Route path='/forgot-password' exact={true}>
+                <Route path='/forgot-password' exact >
                     <ForgotPasswordPage />
                 </Route>
-                <Route path='/reset-password' exact={true}>
+                <Route path='/reset-password' exact >
                     <ResetPasswordPage />
                 </Route>
-                <Route path='/profile'>
-                    <ProfilePage />
-                </Route>
-                <Route path='/feed' exact={true}>
+                <Route path='/feed' exact >
                     <FeedPage />
                 </Route>
-                <Route path='/feed/:id' exact={true}>
+                <Route path='/feed/:id' exact >
                     <OrderPage />
                 </Route>
-                <Route path='/ingredients/:id' exact={true}>
-                    <h1>Здесь что-то будет... Но это не точно</h1>
+                <Route path='/ingredients/:id' exact >
+                    <IngredientDetails />
+                </Route>
+                <ProtectedRoute path='/profile'>
+                    <ProfilePage />
+                </ProtectedRoute>
+                <ProtectedRoute path='/profile/orders/:id' exact >
+                        <OrderPage />
+                </ProtectedRoute>
+                <Route>
+                    <div className={s.container}>
+                        <h1> 404 Здесь ничего нет</h1>
+                    </div>
                 </Route>
             </Switch>
-        </Router>
-        {isOpen && <Modal title={title}>{content}</Modal>}
+        {background &&
+            (<>
+                <Route path='/ingredients/:id' children={<Modal><IngredientDetails /></Modal>} />
+                <ProtectedRoute path='/profile/orders/:id' children={<Modal><OrderPage /></Modal>} />
+                <Route path='/feed/:id' children={<Modal><OrderPage /></Modal>} />
+                <ProtectedRoute path='/order' children={<Modal><OrderDetails /></Modal>} />
+            </>
+                )}
     </div>
   );
 }

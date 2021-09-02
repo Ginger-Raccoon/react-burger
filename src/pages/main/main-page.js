@@ -1,27 +1,24 @@
-import s from './main.module.css'
-import AppHeader from "../../components/app-header/app-header";
+import s from './style.module.css'
 import cn from "classnames";
 import {DndProvider} from "react-dnd";
 import {HTML5Backend} from "react-dnd-html5-backend";
 import BurgerIngredients from "../../components/burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../../components/burger-constructor/burger-constructor";
-import React, {useEffect} from "react";
-import {CHOOSE_INGREDIENTS, getIngredients, INCREASE_COUNTER} from "../../services/actions/card";
+import { CHOOSE_INGREDIENTS, INCREASE_COUNTER } from "../../services/actions/ingredients";
 import {useDispatch, useSelector} from "react-redux";
+import Preloader from '../../components/preloader/preloader';
+import { v4 as uuidv4 } from 'uuid';
 
 export function MainPage() {
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        dispatch(getIngredients())
-    },[dispatch])
-
-    const { data, ingredientRequest, ingredientFailed } = useSelector((store) => store.card);
+    const { ingredientRequest, ingredientFailed, ingredientSuccess } = useSelector(store => store.ingredients);
 
     const handleDrop = (item) => {
+        const newItem = { ...item, productId: uuidv4() };
         dispatch({
             type: CHOOSE_INGREDIENTS,
-            item
+            item: newItem
         })
         dispatch({
             type: INCREASE_COUNTER,
@@ -32,11 +29,10 @@ export function MainPage() {
 
     return (
         <>
-            <AppHeader />
             <div className={cn(s.main__container)}>
-                {ingredientRequest && "Загружаю булочки..."}
+                {ingredientRequest && <Preloader />}
                 {ingredientFailed && "Ошибка загрузки булочек..."}
-                {!ingredientRequest && !ingredientFailed && data.length && (
+                {!ingredientRequest && !ingredientFailed && ingredientSuccess && (
                     <DndProvider backend={HTML5Backend}>
                         <BurgerIngredients/>
                         <BurgerConstructor onDropHandler={handleDrop} />
@@ -45,5 +41,5 @@ export function MainPage() {
             </div>
         </>
     );
-};
+}
 

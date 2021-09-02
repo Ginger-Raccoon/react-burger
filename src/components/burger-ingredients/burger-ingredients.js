@@ -1,29 +1,17 @@
 import React, { useRef, useState, useEffect } from 'react';
 import cn from 'classnames';
 import s from './style.module.css';
-import {  useSelector, useDispatch } from 'react-redux';
+import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 
 import IngredientsList from "../ingredients-list/ingredients-list";
-import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
-import IngredientDetails from "../ingredient-details/ingredient-details";
-import { OPEN_MODAL } from '../../services/actions/modal'
+import { useSelector } from 'react-redux';
+import {filterArray} from "../../utils/functions";
+
 const BurgerIngredients = () => {
-    const dispatch = useDispatch()
     const [current, setCurrent] = useState('bun')
-    const { data } = useSelector((store) => store.card);
-
-    const getIngredients = (item) => {
-        dispatch({
-            type: OPEN_MODAL,
-            isOpen: true,
-            content: <IngredientDetails item={item} />,
-            title: 'Детали ингредиента'
-        })
-    }
-
-    const bun = data.filter((i) => i.type === "bun");
-    const sauce = data.filter((i) => i.type === "sauce");
-    const main = data.filter((i) => i.type === "main");
+    const ingredients = useSelector(store => store.ingredients.allIngredients);
+    const ingredientsObj = filterArray(ingredients)
+    const { bun, sauce, main } = ingredientsObj
 
     const rootRef = useRef(null);
     const bunRef = useRef(null);
@@ -58,14 +46,27 @@ const BurgerIngredients = () => {
                 </Tab>
             </div>
             <div className={cn(s.card__container)} ref={rootRef} onScroll={handleScroll} >
-                <IngredientsList title='Булки' ingredients={ bun } id='bun' getIngredients={getIngredients} childRef={bunRef}/>
-                <IngredientsList title='Соусы' ingredients={ sauce } id='sauce' getIngredients={getIngredients} childRef={sauceRef} />
-                <IngredientsList title='Начинки' ingredients={ main } id='main' getIngredients={getIngredients} childRef={mainRef} />
+                <IngredientsList
+                    title='Булки'
+                    ingredients={ bun }
+                    id='bun'
+                    ref={ bunRef }
+                />
+                <IngredientsList
+                    title='Соусы'
+                    ingredients={ sauce }
+                    id='sauce'
+                    ref={ sauceRef }
+                />
+                <IngredientsList
+                    title='Начинки'
+                    ingredients={ main }
+                    id='main'
+                    ref={ mainRef }
+                />
             </div>
         </div>
     )
 }
-
-
 
 export default BurgerIngredients

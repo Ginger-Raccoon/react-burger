@@ -1,4 +1,4 @@
-import s from './order.module.css';
+import s from './style.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import cn from 'classnames';
 import bun01 from '../../images/bun-01.png';
@@ -8,7 +8,7 @@ import meat03 from '../../images/meat-03.png';
 import sauce03 from '../../images/sauce-03.png';
 import mineralRings from '../../images/mineral-rings.png';
 import { useParams, Redirect } from 'react-router-dom';
-import {ordersData} from "../../utils/data";
+import { ordersData } from "../../utils/data";
 
 export function OrderPage() {
     const { id } = useParams();

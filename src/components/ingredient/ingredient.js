@@ -1,32 +1,28 @@
 import React from "react";
 import PropTypes from 'prop-types';
-import {useSelector} from "react-redux";
-import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
+import { useSelector } from "react-redux";
+import { useDrag } from "react-dnd";
+import { Counter, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import cn from 'classnames';
 import s from './style.module.css'
-import {useDrag} from "react-dnd";
 
-const Ingredient = ({item, getIngredients}) => {
+const Ingredient = ({ item }) => {
     const [{ isDrag }, dragRef] = useDrag({
         type: 'ingredient',
         item,
-        collect: monitor => ({
+        collect: (monitor) => ({
             isDrag: monitor.isDragging()
-        })
-    })
+        }),
+    });
 
-    const { counts, bun } = useSelector(store => store.card.burgerIngredients);
+    const { counts, bun } = useSelector(store => store.ingredients.burgerIngredients);
     const isBun = item.type === 'bun'
     const count = isBun && bun && bun._id === item._id ? 2 : counts[item._id] && counts[item._id]
-
-    const handleClick = () => {
-        getIngredients(item)
-    }
 
     const opacity = isDrag ? 0.3 : 1;
 
     return (
-        <div className={cn(s.ingredientsList__container)} ref={dragRef} style={{ opacity }} onClick={handleClick}>
+        <div className={cn(s.ingredientsList__container)} ref={dragRef} style={{ opacity }} >
             <img className={cn('ml-4', 'mr-4', 'mb-1')} src={item.image} alt={item.name} />
             <p className={s.price}>
                 <span className="text text_type_digits-default">{item.price}</span>
@@ -53,7 +49,6 @@ Ingredient.propTypes = {
         image_large: PropTypes.string.isRequired,
         __v: PropTypes.number,
     }).isRequired,
-    getIngredients: PropTypes.func.isRequired
 }
 
 export default  Ingredient;

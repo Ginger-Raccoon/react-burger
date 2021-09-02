@@ -1,12 +1,13 @@
 import React from 'react';
 import cn from 'classnames';
-import { Link } from 'react-router-dom';
-import s from './feed.module.css';
+import { Link, useLocation } from 'react-router-dom';
+import s from './style.module.css';
 import { ordersData } from '../../utils/data'
 import OrderItem from "../../components/order-item/order-item";
 
 
 export function FeedPage() {
+    let location = useLocation();
     return (
         <div className={cn(s.container, 'p-10')}>
             <div>
@@ -14,7 +15,10 @@ export function FeedPage() {
                 <ul className={cn(s.orders)}>
                     {ordersData.map((el, i) => (
                         <li className={cn(s.order, 'mb-4')} key={i}>
-                            <Link to={`/feed/${el.order.number}`} className={s.link}>
+                            <Link to={{
+                                pathname: `/feed/${el.order.number}`,
+                                state: { background: location }
+                            }} className={s.link}>
                                 <OrderItem number={el.order.number} name={el.name} />
                             </Link>
                         </li>
