@@ -3,17 +3,17 @@ import ReactDOM from 'react-dom';
 import cn from 'classnames';
 import {  CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
 import s from './style.module.css';
 import ModalOverlay from "../modal-overlay/modal-overlay";
+import { CLOSE_MODAL } from '../../services/actions/modal'
 
 
 const Modal = (props) => {
-
+    const dispatch = useDispatch()
     const closeModal = () => {
-        props.setModal({
-            isOpen: false,
-            content: null,
-            title: null
+        dispatch({
+            type: CLOSE_MODAL
         })
     }
 

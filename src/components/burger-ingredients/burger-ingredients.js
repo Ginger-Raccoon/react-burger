@@ -1,82 +1,71 @@
-import React, {useContext} from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import cn from 'classnames';
 import s from './style.module.css';
-import PropTypes from 'prop-types';
+import {  useSelector, useDispatch } from 'react-redux';
 
-import IngredientsList from "../Ingredients-list/Ingredients-list";
+import IngredientsList from "../ingredients-list/ingredients-list";
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import IngredientDetails from "../ingredient-details/ingredient-details";
-import {BurgerContext} from "../../services/burgerContext";
+import { OPEN_MODAL } from '../../services/actions/modal'
+const BurgerIngredients = () => {
+    const dispatch = useDispatch()
+    const [current, setCurrent] = useState('bun')
+    const { data } = useSelector((store) => store.card);
 
-const BurgerIngredients = ({setModal}) => {
-    const [current, setCurrent] = React.useState('one')
-    const { state, setState } = useContext(BurgerContext);
-
-    const getData = (item) => {
-        item.type === 'bun' ?
-            setState({
-                ...state,
-                burgerIngredients: {
-                    ...state.burgerIngredients,
-                    bun: item
-                }
-            }) :
-            setState({
-                ...state,
-                burgerIngredients: {
-                    ...state.burgerIngredients,
-                    filling: [...state.burgerIngredients.filling, item]
-                }
-            })
-        setModal ({
-                isOpen: true,
-                content: <IngredientDetails item={item}/>,
-                title: 'Детали ингредиента'
-                }
-        )
+    const getIngredients = (item) => {
+        dispatch({
+            type: OPEN_MODAL,
+            isOpen: true,
+            content: <IngredientDetails item={item} />,
+            title: 'Детали ингредиента'
+        })
     }
 
-    const bun = state.data.filter((i) => i.type === "bun");
-    const sauce = state.data.filter((i) => i.type === "sauce");
-    const main = state.data.filter((i) => i.type === "main");
+    const bun = data.filter((i) => i.type === "bun");
+    const sauce = data.filter((i) => i.type === "sauce");
+    const main = data.filter((i) => i.type === "main");
+
+    const rootRef = useRef(null);
+    const bunRef = useRef(null);
+    const sauceRef = useRef(null);
+    const mainRef = useRef(null);
+
+    const handleScroll = () => {
+        const bunDistance = Math.abs(rootRef.current.getBoundingClientRect().top - bunRef.current.getBoundingClientRect().top)
+        const sauceDistance = Math.abs(rootRef.current.getBoundingClientRect().top - sauceRef.current.getBoundingClientRect().top)
+        const mainDistance = Math.abs(rootRef.current.getBoundingClientRect().top - mainRef.current.getBoundingClientRect().top)
+        const minDistance = Math.min(bunDistance, sauceDistance, mainDistance);
+        const currentHeader = minDistance === bunDistance ? 'bun' : minDistance === sauceDistance ? 'sauce' : 'main';
+        setCurrent(prevState => (currentHeader === prevState.current ? prevState.current : currentHeader))
+    }
+
+    useEffect(() => {
+        document.querySelector(`#${current}`).scrollIntoView();
+    },[current])
+
     return (
         <div className={cn(s.container)}>
             <h2 className={cn('mt-10', 'mb-5', 'text', 'text_type_main-large')}>Соберите бургер</h2>
             <div style={{ display: 'flex' }}>
-                <Tab value="buns" active={current === 'buns'} onClick={setCurrent} className={cn("text", "text_type_main-default")}>
+                <Tab value="bun" active={current === 'bun'} onClick={setCurrent} className={cn("text", "text_type_main-default")}>
                     Булки
                 </Tab>
-                <Tab value="sauces" active={current === 'sauces'} onClick={setCurrent}>
+                <Tab value="sauce" active={current === 'sauce'} onClick={setCurrent}>
                     Соусы
                 </Tab>
-                <Tab value="mains" active={current === 'mains'} onClick={setCurrent}>
+                <Tab value="main" active={current === 'main'} onClick={setCurrent}>
                     Начинки
                 </Tab>
             </div>
-            <div className={cn(s.card__container)}>
-                <IngredientsList title='Булки' ingredients={ bun } getData={getData}/>
-                <IngredientsList title='Соусы' ingredients={ sauce } getData={getData}/>
-                <IngredientsList title='Начинки' ingredients={ main } getData={getData}/>
+            <div className={cn(s.card__container)} ref={rootRef} onScroll={handleScroll} >
+                <IngredientsList title='Булки' ingredients={ bun } id='bun' getIngredients={getIngredients} childRef={bunRef}/>
+                <IngredientsList title='Соусы' ingredients={ sauce } id='sauce' getIngredients={getIngredients} childRef={sauceRef} />
+                <IngredientsList title='Начинки' ingredients={ main } id='main' getIngredients={getIngredients} childRef={mainRef} />
             </div>
         </div>
-)
+    )
 }
 
-BurgerIngredients.propTypes = {
-    data: PropTypes.arrayOf(PropTypes.shape({
-        _id: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired,
-        type: PropTypes.string.isRequired,
-        proteins: PropTypes.number.isRequired,
-        fat: PropTypes.number.isRequired,
-        carbohydrates: PropTypes.number.isRequired,
-        calories: PropTypes.number.isRequired,
-        price: PropTypes.number.isRequired,
-        image: PropTypes.string.isRequired,
-        image_mobile: PropTypes.string.isRequired,
-        image_large: PropTypes.string.isRequired,
-        __v: PropTypes.number,
-    })).isRequired,
-}
+
 
 export default BurgerIngredients

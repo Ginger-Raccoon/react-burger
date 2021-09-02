@@ -1,0 +1,7 @@
+.ingredientsList__section {
+    display: flex;
+    flex-wrap: wrap;
+    grid-gap: 32px 24px;
+}
+
+

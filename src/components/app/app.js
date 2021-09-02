@@ -1,72 +1,51 @@
-import React, {useEffect, useState} from 'react';
-import { BurgerContext } from '../../services/burgerContext';
-import AppHeader from '../app-header/app-header';
-import BurgerIngredients  from "../burger-ingredients/burger-ingredients";
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './style.module.css';
-import BurgerConstructor from "../burger-constructor/burger-constructor";
-import {url} from "../../utils/constant";
 import Modal from "../modal/modal";
-
+import {ResetPasswordPage, LoginPage, MainPage, RegisterPage, ProfilePage, FeedPage, OrderPage} from '../../pages'
 import cn from 'classnames';
 import s from './style.module.css';
+import {ForgotPasswordPage} from "../../pages/forgot-password/forgot-password";
 
 function App() {
-
-    const [state, setState] = useState({
-        data: [],
-        success: false,
-        burgerIngredients: {
-            bun: null,
-            filling: []
-        }
-    });
-
-    const [modal, setModal] = useState({
-        isOpen: false,
-        content: null,
-        title: null
-    })
-
-    const getData = () => {
-        setState({...state, success: false});
-        fetch(url)
-            .then(res => {
-                if (res.ok) {
-                    return res.json()
-                } else {
-                    throw new Error('Ошибка сети')
-                }
-            })
-            .then(data => {
-                setState({
-                    ...state,
-                    data: data.data,
-                    success: data.success
-                })
-            })
-            .catch(() => {
-                setState({
-                    ...state,
-                    success: false
-                })
-            })
-    }
-
-    useEffect(() => {
-        getData()
-    },[])
+    const { isOpen, title, content } = useSelector((store) => store.modal);
 
 
   return (
     <div className={cn(s.page)}>
-      <AppHeader />
-      <div className={cn(s.main__container)}>
-          <BurgerContext.Provider value={{ state, setState }}>
-              <BurgerIngredients setModal={setModal}/>
-              {(state.burgerIngredients.bun && <BurgerConstructor setModal={setModal}/>)?<BurgerConstructor setModal={setModal}/> : "Выберите булочку"}
-          </BurgerContext.Provider>
-      </div>
-        {modal.isOpen && <Modal setModal={setModal} title={modal.title}>{modal.content}</Modal>}
+        <Router>
+            <Switch>
+                <Route path='/' exact={true}>
+                    <MainPage />
+                </Route>
+                <Route path='/login' exact={true}>
+                    <LoginPage />
+                </Route>
+                <Route path='/register' exact={true}>
+                    <RegisterPage />
+                </Route>
+                <Route path='/forgot-password' exact={true}>
+                    <ForgotPasswordPage />
+                </Route>
+                <Route path='/reset-password' exact={true}>
+                    <ResetPasswordPage />
+                </Route>
+                <Route path='/profile'>
+                    <ProfilePage />
+                </Route>
+                <Route path='/feed' exact={true}>
+                    <FeedPage />
+                </Route>
+                <Route path='/feed/:id' exact={true}>
+                    <OrderPage />
+                </Route>
+                <Route path='/ingredients/:id' exact={true}>
+                    <h1>Здесь что-то будет... Но это не точно</h1>
+                </Route>
+            </Switch>
+        </Router>
+        {isOpen && <Modal title={title}>{content}</Modal>}
     </div>
   );
 }

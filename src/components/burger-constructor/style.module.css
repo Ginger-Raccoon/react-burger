@@ -4,6 +4,14 @@
     min-width: 600px;
 }
 
+.container_active {
+    background-color: #1C1C21;
+}
+
+.container_candrop {
+    border: 10px solid #1C1C21;
+}
+
 .container__head{
     margin-left: 24px;
 }
@@ -35,11 +43,7 @@
     border-radius: 6px;
 }
 
-.list__item{
-    display: flex;
-    align-items: center;
-    /* justify-content: space-between; */
-}
+
 
 .total{
     display: flex;
