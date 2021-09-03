@@ -1,46 +1,38 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# **Stellar Burger**
 
-## Available Scripts
+Учебный проект
 
-In the project directory, you can run:
+### **Содержание**
+  - [О проекте](#О-проекте)
+  - [Технологии](#Технологии)
+  - [Особенности](#Особенности)
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## О проекте ##
+Веб приложение **Stellar Burger**. Некоторые страницы которого защищены авторизацией. 
+Разработано в рамках интенсива [React-разработчик](https://praktikum.yandex.ru/react/) и представляет собой приложение для бургерной с возможностью регистрации,авторизации, оформления онлайн-заказа, просмотра истории заказов, а так же возможностью узнать состав ингредиентов. База данных пользователей и сохраненных новостей хранится на сервере, защищенном политиками безопасности и входящей валидацией запросов.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+В настоящий момент приложение не адаптировано для различных разрешений экрана и браузеров, применены технологии grid и flex;
 
-### `npm test`
+## Технологии ##
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Использована библиотека UI-компонентов [Яндекс.Практикум.Реакт](https://github.com/yandex-praktikum/react-developer-burger-ui-components)
+- Frontend приложения написан с использованием библиотеки [React](https://reactjs.org/)
+- Шаблон приложения развернут с помощью create-react-app
 
-### `npm run build`
+## Особенности
+  Проект может быть собран и запущен локально по адресу http://localhost:3000/ путем клонирования данного репозитория и последовательного запуска команд в терминале (должны быть установлены программы Git, NodeJS и менеджер пакетов npm):
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```bash
+git clone https://github.com/Ginger-Raccoon/react-burger.git
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+cd react-burger
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+npm install
 
-### `npm run eject`
+npm run start
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+--------
+[Свяжитесь со мной](https://t.me/gingerraccoon)
